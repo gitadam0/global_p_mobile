@@ -58,6 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Color(0xFFFFFFFF),
         centerTitle: true,
         title: Image.asset("images/gp.png",height: 40,),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Color(0xff798DB1),
+              ),
+              onPressed: () {
+                // do something
+              },
+            )
+          ]
       ),
       body: Center(
         child: Column(
@@ -227,54 +238,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  // SizedBox(
-                  //   width: 20,
-                  // ),
-                  Hero(
-                    tag: "btn2",
-                    child: GestureDetector(
-                      onTap: (){
-                        // Navigator.push(
-                        //     context,
-                        //     PageRouteBuilder(
-                        //         transitionDuration: Duration(seconds: 2),
-                        //         pageBuilder: (_, __, ___) => contact()
-                        //     )
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   _createRoute(),
-                        // );
-                        _showBottomSheet_contact(context,s.height*0.7);
+
+                  Container(
+                    width: s.width * 0.25,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _showBottomSheet_contact(context,s.height);
                       },
-                      child: Container(
-                        width: s.width * 0.25,
+                      child: Text('Contact'),
+                      style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(), primary: Color(0xff798DB1)),
 
-
-                        decoration: BoxDecoration(
-                          color: Color(0xff798DB1),
-                          borderRadius: BorderRadius.circular(29),
-                        ),
-                        //width: 150,
-                        child: Center(
-                                child: Text(
-                                  'Contact',
-                                  style: TextStyle(color: Colors.white,fontSize: 15),
-                                ),
-                        ),
-                      ),
                     ),
                   ),
-                  // SizedBox(
-                  //   width: s.width * 0.35,
-                  //   //width: 150,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {},
-                  //     child: Text('Contact'),
-                  //     style: ElevatedButton.styleFrom(
-                  //         shape: StadiumBorder(), primary: Color(0xff798DB1)),
-                  //   ),
-                  // ),
+
 
                 ],
               ),
@@ -315,42 +292,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBottomSheetContent(BuildContext context, double height) {
     return Column(
+
+      mainAxisSize: MainAxisSize.max,
+
       children: [
-
-        Column(
-
-          mainAxisSize: MainAxisSize.max,
+        // Your widget content for the bottom sheet here
+        // This will take the whole screen except the app bar
+        // For example:
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context); // Close the bottom sheet when the button is pressed
+          },
+          child: Text('Close'),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Text('About Us'),
+        ),
+        Container(
+          height: height,
+        child: ListView(
 
           children: [
-            // Your widget content for the bottom sheet here
-            // This will take the whole screen except the app bar
-            // For example:
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the bottom sheet when the button is pressed
-              },
-              child: Text('Close'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Text('About Us'),
-            ),
-            Container(
-              height: height,
-            child: ListView(
-
-              children: [
-                Text("datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata"),
-
-
-              ],
-            ),
-            ),
-
+            Text("adatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata"),
 
 
           ],
         ),
+        ),
+
+
+
       ],
     );
   }
@@ -364,15 +336,16 @@ class _MyHomePageState extends State<MyHomePage> {
         return SingleChildScrollView(
 
           child: Container(
-            height: height*4,
+            height: height,
             // padding: EdgeInsets.only(
             //   bottom: MediaQuery.of(context).viewInsets.bottom,
             // ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding:  EdgeInsets.fromLTRB(10, 30, 10, 10),
                   child: Row(
                     children: [
 
@@ -382,16 +355,21 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Icon(Icons.arrow_back),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).pop();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Icon(Icons.arrow_back,size: 30,),
+                              ),
                             ),
                           ),
                           Expanded(
                                child: Container(
                                   //margin:EdgeInsets.fromLTRB(100, 10, 100, 100)
                                     margin: EdgeInsets.only(top: 10),
-                                    width: 160,
+                                    width: 180,
                                     child: Image.asset("images/gp.png")),
                              ),
                         ],),
@@ -399,185 +377,43 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 400,
-                  child: ListView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Address',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Text("Morroco", style: TextStyle(fontSize: 15)),
-                    Text("Casablanca", style: TextStyle(fontSize: 15)),
-                    Text("hay llala mereim bloc b", style: TextStyle(fontSize: 15)),
-                    Text("Appartement n2", style: TextStyle(fontSize: 15)),
-
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    // Container(
-                    //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                    //   child: Image.asset("images/img.png"),),
-                    Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone),
-                        Text(": Casablanca", style: TextStyle(fontSize: 15),),
-                      ],),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    // Container(
-                    //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                    //   child: Image.asset("images/img.png"),),
-                    Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone),
-                        Text(": Casablanca", style: TextStyle(fontSize: 15),),
-                      ],),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    // Container(
-                    //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                    //   child: Image.asset("images/img.png"),),
-                    Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone),
-                        Text(": Casablanca", style: TextStyle(fontSize: 15),),
-                      ],),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    // Container(
-                    //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                    //   child: Image.asset("images/img.png"),),
-                    Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone),
-                        Text(": Casablanca", style: TextStyle(fontSize: 15),),
-                      ],),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        'Contact Us',
-                        style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    // Container(
-                    //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                    //   child: Image.asset("images/img.png"),),
-                    Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone),
-                        Text(": Casablanca", style: TextStyle(fontSize: 15),),
-                      ],),
-
-
-
-                  ],),
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Text(
+                    'Address',
+                    style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
+                  ),
                 ),
+                Text("Morroco", style: TextStyle(fontSize: 15)),
+                Text("Casablanca", style: TextStyle(fontSize: 15)),
+                Text("hay llala mereim bloc b", style: TextStyle(fontSize: 15)),
+                Text("Appartement n2", style: TextStyle(fontSize: 15)),
+
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Text(
+                    'Contact Us',
+                    style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                // Container(
+                //   width: 160,padding: EdgeInsets.only(bottom: 15),
+                //   child: Image.asset("images/img.png"),),
+                Text("+212 0604594645", style: TextStyle(fontSize: 15),),
+                Text("global.pref@gmail.com", style: TextStyle(fontSize: 15),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.phone),
+                    Text(": +212 0604594645", style: TextStyle(fontSize: 15),),
+                  ],),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.mail),
+                    Text(": global.pref@gmail.com", style: TextStyle(fontSize: 15),),
+                  ],),
 
 
 

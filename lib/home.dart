@@ -17,6 +17,17 @@ class _homeState extends State<home> {
           backgroundColor: Color(0xFFFFFFFF),
           centerTitle: true,
           title: Image.asset("images/gp.png",height: 40,),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Color(0xff798DB1),
+              ),
+              onPressed: () {
+                // do something
+              },
+            )
+          ],
           iconTheme: IconThemeData(
             color: Colors.black, //change your color here
           ),
