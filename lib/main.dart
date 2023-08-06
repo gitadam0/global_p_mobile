@@ -1,42 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:global_p/about.dart';
 import 'package:global_p/contact.dart';
+import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
 
 import 'home.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
+final myProvider = StateProvider.autoDispose((ref) {
+  return "en";
+});
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
+  //String language="en";
+
+
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context,WidgetRef ref) {
+
+    final String lang = ref.watch(myProvider);
+    final router = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      routerDelegate: router.routerDelegate,
+
+      localizationsDelegates: [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale(lang),
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('fr'), // Spanish
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      initialRoute: "/splash",
-      routes: {
-        "/login": (context) => MyHomePage(title: "Global"),
-        "/about": (context) => about(),
-        "/contact": (context) => contact(),
-        "/splash": (context) => splash(),
-        "/home": (context) => home(),
-
-      },
+      //initialRoute: "/splash",
+      // routes: {
+      //   "/login": (context) => MyHomePage(title: "u",lang:"language"),
+      //   "/about": (context) => about(),
+      //   "/contact": (context) => contact(),
+      //   "/splash": (context) => splash(),
+      //   "/home": (context) => home(),
+      //
+      // },
+      //home:splash() ,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+   MyHomePage({super.key, required this.title});
 
   final String title;
+
+
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -47,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var visible = true;
   var auth = true;
   var myform=GlobalKey<FormState>();
-
+  //String text = 'welcome-text'.i18n();
+   String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
@@ -59,15 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         title: Image.asset("images/gp.png",height: 40,),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Color(0xff798DB1),
-              ),
-              onPressed: () {
-                // do something
-              },
-            )
+            DropdownButtonExample(),
+
+
           ]
       ),
       body: Center(
@@ -111,7 +140,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               Icons.person,
                               color: Color(0xff798DB1),
                             ),
-                            hintText: "Username",
+                            //hintText: "Username",
+                            hintText: AppLocalizations.of(context)!.helloWorld.toString(),
 
                           ),
                           cursorColor: Color(0xff798DB1),
@@ -154,10 +184,10 @@ class _MyHomePageState extends State<MyHomePage> {
               //width: 150,
               child: ElevatedButton(
                 onPressed: () {
-                  if(myform.currentState!.validate()){
-
-                  }
-                  Navigator.pushNamed(context, "/home");
+                  // if(myform.currentState!.validate()){
+                  // }
+                  //Navigator.pushNamed(context, "/home");
+                  Navigator.pushReplacementNamed(context, "/home");
                 },
                 child: Text('Login'),
                 style: ElevatedButton.styleFrom(
@@ -211,6 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       ),
                     ),
+                  SizedBox(width: 10,),
 
                   Hero(
                     tag:"btn1",
@@ -238,7 +269,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-
+                  SizedBox(width: 10,),
                   Container(
                     width: s.width * 0.25,
                     child: ElevatedButton(
@@ -474,4 +505,47 @@ class Txtfield extends StatelessWidget {
 //   );
 // }
 
+const List<String> list = <String>['en', 'fr'];
 
+
+class DropdownButtonExample extends ConsumerStatefulWidget   {
+  //const DropdownButtonExample({super.key});
+  const DropdownButtonExample({Key? key}): super(key: key);
+
+
+  @override
+  _DropdownButtonExampleState createState() => _DropdownButtonExampleState();
+}
+
+
+class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
+  String dropdownValue = list.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: DropdownButton<String>(
+        value: dropdownValue,
+
+        //elevation: 16,
+        style:
+        const TextStyle(color: Colors.black),
+
+        onChanged: (String? value) {
+          // This is called when the user selects an item.
+          setState(() {
+            dropdownValue = value!;
+            ref.read(myProvider.notifier).state=dropdownValue;
+          });
+        },
+        items: list.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
