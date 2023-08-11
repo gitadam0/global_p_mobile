@@ -4,6 +4,7 @@ import 'package:global_p/about.dart';
 import 'package:global_p/contact.dart';
 import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
+import 'package:go_router/go_router.dart';
 
 import 'home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +13,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final myProvider = StateProvider.autoDispose((ref) {
   return "en";
+});
+
+final remember_me = StateProvider.autoDispose((ref) {
+  return false;
 });
 
 void main() {
@@ -27,6 +32,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
 
     final String lang = ref.watch(myProvider);
+    final String remember = ref.watch(myProvider);
     final router = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
@@ -65,7 +71,7 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget  {
    MyHomePage({super.key, required this.title});
 
   final String title;
@@ -73,18 +79,23 @@ class MyHomePage extends StatefulWidget {
 
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
+
+  var value=false;
 
   var visible = true;
-  var auth = true;
   var myform=GlobalKey<FormState>();
-  //String text = 'welcome-text'.i18n();
+  var t1 =TextEditingController();
+  var t2 =TextEditingController();
+  var auth = false;
+
    String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
+    var auth2 = ref.watch(remember_me);
     Size s = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -113,8 +124,26 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 120,
             ),
-
-            //login form
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Container(
+                width: s.width*0.75,
+                child: Align(alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Sign In",
+                      style:TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff798DB1)) ,
+                    )
+                ),
+              ),
+            ),
+            //
+            //
+            //Login form
+            //
+            //
             Form(
               key: myform,
               child: Column(children: [
@@ -122,14 +151,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Txtfield(
 
                         child: TextFormField(
-
+                          controller: t1,
                           //autovalidateMode:AutovalidateMode.onUserInteraction,
-                          validator: (val){
-                            if(!(val=="admin")){
-                             // return "wrong username";
-                            }
-                          },
-
+                          // validator: (val){
+                          //   if(!(val=="admin")){
+                          //     return "wrong username";
+                          //   }
+                          // },
                           decoration: InputDecoration(
                             //contentPadding: EdgeInsets.only(left: 35, right: 5, top: 5, bottom: 5),
                             //errorStyle: TextStyle(fontSize: 12, height: 0),
@@ -141,19 +169,17 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Color(0xff798DB1),
                             ),
                             //hintText: "Username",
-                            hintText: AppLocalizations.of(context)!.helloWorld.toString(),
-
+                            hintText: AppLocalizations.of(context)!.username.toString(),
                           ),
                           cursorColor: Color(0xff798DB1),
-                        )),
-
-
-
+                        )
+                    ),
                 SizedBox(
                   height: 20,
                 ),
                 Txtfield(
                     child: TextFormField(
+                      controller: t2,
                       obscureText: visible,
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -169,46 +195,110 @@ class _MyHomePageState extends State<MyHomePage> {
                               });
                             },
                           ),
-                          hintText: "enter you name"),
+                          hintText: AppLocalizations.of(context)!.password.toString()
+                      ),
                       cursorColor: Color(0xff798DB1),
                     )),
               ],),
             ),
 
-            SizedBox(
-              height: 40,
+            auth?
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              //decoration: BoxDecoration(color: Color(0x55000000)),
+              width: s.width*0.72,
+              child: Text("wrong credentiels",style: TextStyle(color: Colors.red),),
+            ):
+            Container(
+              height: 0,
+              padding: EdgeInsets.fromLTRB(0, 0, 0,0 ),
+              //decoration: BoxDecoration(color: Color(0x55000000)),
+              width: s.width*0.72,
+              child: Text("",style: TextStyle(color: Colors.red),),
             ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              //decoration: BoxDecoration(color: Color(0x55000000)),
+              width: s.width*0.8,
+              child: Row(
+
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //
+                  //Checkbox
+                  //
+                  Row(children: [
+                    Transform.scale(
+                      scale: 0.9,
+                      child: Checkbox(
+                        checkColor: Color(0xff000000),
+                        activeColor:Color(0xff798DB1) ,
+                        shape: RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(4))),
+                        value: auth2,
+                        onChanged: (n){
+                          ref.read(remember_me.notifier).state=!ref.watch(remember_me);
+                        },
+                      ),
+                    ),
+                    Text("Remember me"),
+
+
+                  ],),
+                  Text(
+                    "forgot password?",
+                    style: TextStyle(
+                        color: Color(0xff000000),
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xff143a80)),
+                  ),
+                ],
+              ),
+            ),
+            //
+            //
+            // // // Login Button
+            //
+            //
             SizedBox(
               height: 50,
               width: s.width * 0.8,
               //width: 150,
               child: ElevatedButton(
                 onPressed: () {
-                  // if(myform.currentState!.validate()){
-                  // }
-                  //Navigator.pushNamed(context, "/home");
-                  Navigator.pushReplacementNamed(context, "/home");
+                   // if(myform.currentState!.validate()){
+                   // }
+                  if(t1.text=="" && t2.text==""){
+                    setState(() {
+                      auth=false;
+                      context.go('/home');
+                    });
+                  }else{
+                    setState(() {
+                      auth=true;
+                    });
+                  }
+                  //context.go('/home');
                 },
                 child: Text('Login'),
                 style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(), primary: Color(0xff798DB1)),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "forgot password?",
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      decoration: TextDecoration.underline,
-                      decorationColor: Color(0xff143a80)),
-                ),
-              ],
-            ),
+
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       "forgot password?",
+            //       style: TextStyle(
+            //           color: Color(0xff000000),
+            //           decoration: TextDecoration.underline,
+            //           decorationColor: Color(0xff143a80)),
+            //     ),
+            //   ],
+            // ),
             Expanded(
                 child: SizedBox(
               height: 10,
@@ -260,7 +350,11 @@ class _MyHomePageState extends State<MyHomePage> {
                          //    context,
                          //    _createRoute1(),
                          //  );
-                          _showBottomSheet(context,s.height*0.7);
+                         // _showBottomSheet(context,s.height*0.7);
+                          //context.go('/onboarding');
+                          //GoRouter.of(context).go("/onboarding");
+                          context.push("/onboarding");
+                          //GoRouter.of(context).push("/onboarding");
                         },
                         child: Text('Demo'),
                         style: ElevatedButton.styleFrom(
@@ -527,11 +621,8 @@ class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
       padding: const EdgeInsets.all(12.0),
       child: DropdownButton<String>(
         value: dropdownValue,
-
-        //elevation: 16,
-        style:
-        const TextStyle(color: Colors.black),
-
+        elevation: 16,
+        style: const TextStyle(color: Colors.black),
         onChanged: (String? value) {
           // This is called when the user selects an item.
           setState(() {

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'main.dart';
 
@@ -25,11 +26,13 @@ class _splashState extends State<splash> {
         (){
           //Navigator.pushReplacementNamed(context, "/home");
           
-           Navigator.pushReplacement(
-               context,
-               PageRouteBuilder(
-                   transitionDuration: Duration(seconds: 1),
-                   pageBuilder: (_, __, ___) => MyHomePage(title: "Global")));
+           // Navigator.pushReplacement(
+           //     context,
+           //     PageRouteBuilder(
+           //         transitionDuration: Duration(seconds: 1),
+           //         pageBuilder: (_, __, ___) => MyHomePage(title: "Global")));
+
+          context.go('/login');
         }
     );
   }

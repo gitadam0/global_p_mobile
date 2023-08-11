@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'data.dart';
 import 'main.dart';
@@ -52,7 +53,7 @@ class _homeState extends State<home> {
               child: Text('Drawer Header'),
             ),
             ListTile(
-              title: const Text('Add User'),
+              title: const Text('Settings'),
               onTap: () {
                 //Navigator.pushNamed(context, "/add_user");
               },
@@ -60,7 +61,8 @@ class _homeState extends State<home> {
             ListTile(
               title: const Text('Log out'),
               onTap: () {
-                Navigator.pushReplacementNamed(context, "/login");
+                //Navigator.pushReplacementNamed(context, "/login");
+                context.go('/login');
               },
             ),
           ],
@@ -71,39 +73,51 @@ class _homeState extends State<home> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
-            child: SizedBox(
-              height: 45,
-              child: TextField(
-                cursorHeight: 20,
-                decoration: InputDecoration(
-
-                    prefixIcon: Icon(Icons.search),
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-
-                    hintText: 'Search Here...'),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+          //   child: SizedBox(
+          //     height: 45,
+          //     child: TextField(
+          //       cursorHeight: 20,
+          //       decoration: InputDecoration(
+          //
+          //           prefixIcon: Icon(Icons.search),
+          //           fillColor: Colors.white,
+          //           filled: true,
+          //           border: OutlineInputBorder(
+          //             borderRadius: BorderRadius.all(Radius.circular(10)),
+          //           ),
+          //
+          //           hintText: 'Search Here...'),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: GridView.count(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 5,vertical:40),
               primary: false,
               crossAxisCount: 3,
+                childAspectRatio: 0.9,
                 children: [
                   ...(Categorys.map((e){
                     return Container(
+                      padding: EdgeInsets.all(0),
                       child: Column(
+
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(child: Image.asset(e.img,fit: BoxFit.fitHeight,),height: 80,),
+                          Container(
+                            child: ClipRRect(
+                                child: Image.asset(e.img,fit: BoxFit.fitHeight,),
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            height: 90,
+
+                          ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(e.name),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Text(e.name,softWrap: false,),
                           ),
                         ],
                       ),

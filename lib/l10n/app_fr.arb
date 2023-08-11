@@ -1,6 +1,11 @@
 {
+  "password": "mot de passe",
+
+  "username": "nom d'utilisateur",
+
   "helloWorld": "Hello frenchh!",
   "@helloWorld": {
     "description": " frenchfff The conventional newborn programmer greeting"
   }
+
 }
