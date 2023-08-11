@@ -5,10 +5,13 @@ import 'package:global_p/contact.dart';
 import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'my_colors.dart';
 
 
 final myProvider = StateProvider.autoDispose((ref) {
@@ -18,6 +21,11 @@ final myProvider = StateProvider.autoDispose((ref) {
 final remember_me = StateProvider.autoDispose((ref) {
   return false;
 });
+
+final selectedIndex_bottomnav = StateProvider.autoDispose((ref) {
+  return -1;
+});
+
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -30,6 +38,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+
 
     final String lang = ref.watch(myProvider);
     final String remember = ref.watch(myProvider);
@@ -54,7 +63,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: mcgpalette0,
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       //initialRoute: "/splash",
@@ -95,10 +104,64 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
    String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
+
+    var selected_index=ref.watch(selectedIndex_bottomnav);
     var auth2 = ref.watch(remember_me);
     Size s = MediaQuery.of(context).size;
 
+    //
+    //
+    //Scaffold
+    //
+    //
+
     return Scaffold(
+
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: selected_index == -1 ? 0: selected_index,
+        selectedItemColor: selected_index == -1 ? Colors.grey[600] : Color(0xff798DB1),
+        unselectedItemColor: Colors.grey[600],
+        /*backgroundColor: colorScheme.surface,
+        selectedItemColor: colorScheme.onSurface,
+
+        selectedLabelStyle: textTheme.caption,
+        unselectedLabelStyle: textTheme.caption,
+        */
+
+        onTap: (value) {
+          // Respond to item press.
+          //ref.read(selectedIndex_bottomnav.notifier).state=value;
+          if (value==0){
+            context.push("/onboarding");
+          }
+          if (value==1){
+            _showBottomSheet_contact(context,s.height);
+          }
+          if (value==2){
+            //MapUtils.openMap(-3.823216,-38.481700);
+            navigateTo(-3.823216,-38.481700);
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            label: 'Demo',
+            icon: Icon(Icons.phone_android_outlined),
+          ),
+          BottomNavigationBarItem(
+            label: 'Contact',
+            icon: Icon(Icons.call),
+          ),
+          BottomNavigationBarItem(
+            label: 'Location',
+            icon: Icon(Icons.location_on),
+          ),
+          BottomNavigationBarItem(
+              label: 'Help',
+            icon: Icon(Icons.contact_support),
+          ),
+        ],
+      ),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xFFFFFFFF),
@@ -245,12 +308,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
 
                   ],),
-                  Text(
-                    "forgot password?",
-                    style: TextStyle(
-                        color: Color(0xff000000),
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color(0xff143a80)),
+                  GestureDetector(
+                    onTap: (){
+                      _showMyDialog();
+                    },
+                    child: Text(
+                      "forgot password?",
+                      style: TextStyle(
+                          color: Color(0xff000000),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xff143a80)),
+                    ),
                   ),
                 ],
               ),
@@ -303,7 +371,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 child: SizedBox(
               height: 10,
             )),
-            Container(
+            //
+            //
+            //OLD BOTTOM NAVIGATION
+            //
+            //
+            /*Container(
               margin: EdgeInsets.all(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -356,9 +429,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           context.push("/onboarding");
                           //GoRouter.of(context).push("/onboarding");
                         },
-                        child: Text('Demo'),
+                        child: Text('Demo',style: TextStyle(color: Colors.black),),
                         style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(), primary: Color(0xff798DB1)),
+                            shape: StadiumBorder(), primary: Color(0xffd7d7d7)),
 
                       ),
                     ),
@@ -378,9 +451,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
 
 
+
                 ],
               ),
-            ),
+            ),*/
+
             // Positioned(
             //   child: Align(
             //     alignment: Alignment.bottomCenter,
@@ -392,7 +467,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       ),
     );
   }
-
 
 
 
@@ -451,7 +525,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       ],
     );
   }
-
+//
+  //
+  //
+  //Contact
+  //
+  //
   void _showBottomSheet_contact(BuildContext context,double height) {
     showModalBottomSheet(
       context: context,
@@ -466,8 +545,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             //   bottom: MediaQuery.of(context).viewInsets.bottom,
             // ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-
+                crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding:  EdgeInsets.fromLTRB(10, 30, 10, 10),
@@ -503,7 +581,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                   child: Text(
                     'Address',
                     style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
@@ -550,7 +628,65 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       },
     );
   }
+//
+  //
+  //Forgot password
+  //
+  //
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
 
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+
+        return AlertDialog(
+
+          title: const Text('Forgot password'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This is a demo alert dialog.'),
+
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextField(
+                    //initialValue: 'Input text',
+                    decoration: InputDecoration(
+                      labelText: 'Label text',
+                      labelStyle:TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(
+                        Icons.mail,
+
+
+                      ),
+                      focusedBorder:  OutlineInputBorder(
+                        borderSide:  BorderSide(color: Colors.black ),
+                      ),
+                    ),
+
+
+                  ),
+                ),
+
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 
 
@@ -639,4 +775,32 @@ class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
       ),
     );
   }
+}
+
+
+
+
+
+class MapUtils {
+
+  MapUtils._();
+
+  static Future<void> openMap(double latitude, double longitude) async {
+    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+}
+
+ void navigateTo(double lat, double lng) async {
+var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+if (await canLaunch(uri.toString())) {
+await launch(uri.toString());
+} else {
+//print("could not launch");
+throw 'Could not launch ${uri.toString()}';
+}
 }
