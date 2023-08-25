@@ -6,7 +6,6 @@ import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -41,7 +40,7 @@ class MyApp extends ConsumerWidget {
 
 
     final String lang = ref.watch(myProvider);
-    final String remember = ref.watch(myProvider);
+    //final String remember = ref.watch(myProvider);
     final router = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
@@ -139,8 +138,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             _showBottomSheet_contact(context,s.height);
           }
           if (value==2){
-            //MapUtils.openMap(-3.823216,-38.481700);
-            navigateTo(-3.823216,-38.481700);
+            //_openMap(33.580071,-7.635136);
+            context.push('/map');
           }
         },
         items: [
@@ -193,7 +192,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 width: s.width*0.75,
                 child: Align(alignment: Alignment.centerLeft,
                     child: Text(
-                      "Sign In",
+                      AppLocalizations.of(context)!.signin.toString(),
                       style:TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -304,7 +303,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         },
                       ),
                     ),
-                    Text("Remember me"),
+                    Text(AppLocalizations.of(context)!.rememberme.toString()),
 
 
                   ],),
@@ -313,7 +312,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       _showMyDialog();
                     },
                     child: Text(
-                      "forgot password?",
+                      AppLocalizations.of(context)!.forgot.toString(),
                       style: TextStyle(
                           color: Color(0xff000000),
                           decoration: TextDecoration.underline,
@@ -513,7 +512,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         child: ListView(
 
           children: [
-            Text("adatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata"),
+            Text("adatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatyy"),
 
 
           ],
@@ -537,6 +536,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
       isScrollControlled: true, // Allows the content to extend beyond the height of the screen
       builder: (BuildContext context) {
+        Size s = MediaQuery.of(context).size;
         return SingleChildScrollView(
 
           child: Container(
@@ -583,40 +583,67 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                   child: Text(
-                    'Address',
-                    style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text("Morroco", style: TextStyle(fontSize: 15)),
-                Text("Casablanca", style: TextStyle(fontSize: 15)),
-                Text("hay llala mereim bloc b", style: TextStyle(fontSize: 15)),
-                Text("Appartement n2", style: TextStyle(fontSize: 15)),
-
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Text(
                     'Contact Us',
                     style: TextStyle(color: Color(0xff798DB1),fontSize: 25,fontWeight: FontWeight.bold),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Text("Nos conseillers sont à votre disposition pour toute information ou réclamation du lundi au vendredi de 8h30 à 20h30 et le samedi de 10h à 18h.", style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600)),
+                      SizedBox(height: 20,),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: (){
+                                  //launch("tel://0604485462");
+                                  //UrlLauncher.launch("tel://21213123123");
+                                  launch("tel:" + Uri.encodeComponent('*123#'));
 
-                // Container(
-                //   width: 160,padding: EdgeInsets.only(bottom: 15),
-                //   child: Image.asset("images/img.png"),),
-                Text("+212 0604594645", style: TextStyle(fontSize: 15),),
-                Text("global.pref@gmail.com", style: TextStyle(fontSize: 15),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.phone),
-                    Text(": +212 0604594645", style: TextStyle(fontSize: 15),),
-                  ],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.mail),
-                    Text(": global.pref@gmail.com", style: TextStyle(fontSize: 15),),
-                  ],),
+                                },
+                                child: Container(
+                                  child: Icon(Icons.phone),
+                                  padding: EdgeInsets.symmetric(horizontal: 42, vertical: 5),
+                                  height: 60,
+                                  width: s.width*0.4 ,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffe5e5e5),
+                                      borderRadius: BorderRadius.circular(29)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: (){
+                                  launch('mailto:adm.mdd@gmail.com');
+                                },
+                                child: Container(
+                                  child: Icon(Icons.mail),
+                                  padding: EdgeInsets.symmetric(horizontal: 42, vertical: 5),
+                                  height: 60,
+                                  width: s.width*0.4 ,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffe5e5e5),
+                                      borderRadius: BorderRadius.circular(29)),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+
+
+                  ],
+                  ),
+                ),
 
 
 
@@ -639,21 +666,33 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-
+        Size s = MediaQuery.of(context).size;
         return AlertDialog(
 
-          title: const Text('Forgot password'),
-          content: const SingleChildScrollView(
+          content:  SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This is a demo alert dialog.'),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
 
+                    Icon(Icons.error_outline,size:60,color: mcgpalette0,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('Forgot password'),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("enter your email and we'll send you a link if we find it",style: TextStyle(color: Colors.grey)),
+                ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: TextField(
                     //initialValue: 'Input text',
                     decoration: InputDecoration(
-                      labelText: 'Label text',
+                      labelText: 'Email',
                       labelStyle:TextStyle(color: Colors.black),
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(
@@ -669,19 +708,41 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Send")
+                  ),
+                ),
+
 
 
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
+            /*TextButton(
               child: const Text('Approve'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
 
-            ),
+            ),*/
+            /*Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: s.width,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Send")
+                ),
+              ),
+            )*/
           ],
         );
       },
@@ -749,6 +810,7 @@ class DropdownButtonExample extends ConsumerStatefulWidget   {
 
 
 class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
+
   String dropdownValue = list.first;
 
   @override
@@ -761,10 +823,8 @@ class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
         style: const TextStyle(color: Colors.black),
         onChanged: (String? value) {
           // This is called when the user selects an item.
-          setState(() {
             dropdownValue = value!;
             ref.read(myProvider.notifier).state=dropdownValue;
-          });
         },
         items: list.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
@@ -777,30 +837,16 @@ class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
   }
 }
 
-
-
-
-
-class MapUtils {
-
-  MapUtils._();
-
-  static Future<void> openMap(double latitude, double longitude) async {
-    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    } else {
-      throw 'Could not open the map.';
-    }
+//
+//
+//Opens map to one location
+//
+//
+Future<void> _openMap(double latitude, double longitude) async {
+  final String mapUrl = "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+  if (await canLaunch(mapUrl)) {
+    await launch(mapUrl);
+  } else {
+    throw 'Could not launch map.';
   }
-}
-
- void navigateTo(double lat, double lng) async {
-var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
-if (await canLaunch(uri.toString())) {
-await launch(uri.toString());
-} else {
-//print("could not launch");
-throw 'Could not launch ${uri.toString()}';
-}
 }

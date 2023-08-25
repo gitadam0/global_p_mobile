@@ -7,6 +7,7 @@ import 'package:global_p/splash.dart';
 import 'package:go_router/go_router.dart';
 
 import '../main.dart';
+import '../map.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
 
@@ -28,6 +29,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
             path: "/onboarding",
             builder: (context,state) => onBoarding()
+        ),
+        GoRoute(
+            path: "/map",
+            builder: (context,state) => MapSample()
         ),
   ]);
 });
