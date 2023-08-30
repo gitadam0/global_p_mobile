@@ -1,6 +1,7 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:global_p/help.dart';
 import 'package:global_p/home.dart';
 import 'package:global_p/onboarding.dart';
 import 'package:global_p/splash.dart';
@@ -33,6 +34,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
             path: "/map",
             builder: (context,state) => MapSample()
+        ),
+        GoRoute(
+            path: "/help",
+            builder: (context,state) => Help()
         ),
   ]);
 });

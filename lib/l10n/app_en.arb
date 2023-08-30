@@ -4,6 +4,7 @@
   "signin": "Sign in",
   "rememberme": "Rememeber me",
   "forgot": "Fogot password?",
+  "login": "Login",
 
   "helloWorld": "Hello World!",
   "@helloWorld": {

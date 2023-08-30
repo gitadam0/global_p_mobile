@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:global_p/about.dart';
 import 'package:global_p/contact.dart';
+import 'package:global_p/data.dart';
+import 'package:global_p/models/expansion_error.dart';
 import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +26,7 @@ final remember_me = StateProvider.autoDispose((ref) {
 final selectedIndex_bottomnav = StateProvider.autoDispose((ref) {
   return -1;
 });
+
 
 
 void main() {
@@ -100,6 +103,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   var t2 =TextEditingController();
   var auth = false;
 
+  var stepper_step=0;
+
    String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
@@ -140,6 +145,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           if (value==2){
             //_openMap(33.580071,-7.635136);
             context.push('/map');
+          }
+          if (value==3){
+            //_showBottomSheet_help(context,s.height);
+            context.push('/help');
           }
         },
         items: [
@@ -299,6 +308,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         shape: RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(4))),
                         value: auth2,
                         onChanged: (n){
+
                           ref.read(remember_me.notifier).state=!ref.watch(remember_me);
                         },
                       ),
@@ -347,7 +357,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   }
                   //context.go('/home');
                 },
-                child: Text('Login'),
+                child: Text(AppLocalizations.of(context)!.login.toString()),
                 style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(), primary: Color(0xff798DB1)),
               ),
@@ -470,7 +480,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
 
 
-  void _showBottomSheet(BuildContext context,double height) {
+  /*void _showBottomSheet(BuildContext context,double height) {
     showModalBottomSheet(
       context: context,
 
@@ -490,9 +500,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   Widget _buildBottomSheetContent(BuildContext context, double height) {
     return Column(
-
       mainAxisSize: MainAxisSize.max,
-
       children: [
         // Your widget content for the bottom sheet here
         // This will take the whole screen except the app bar
@@ -510,21 +518,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         Container(
           height: height,
         child: ListView(
-
           children: [
             Text("adatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatyy"),
-
-
           ],
         ),
         ),
-
-
-
       ],
     );
-  }
-//
+  }*/
+
+  //
   //
   //
   //Contact
@@ -655,20 +658,120 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       },
     );
   }
-//
+
+  /*//
+  //
+  //
+  //Help
+  //
+  //
+
+  void _showBottomSheet_help(BuildContext context,double height) {
+    showModalBottomSheet(
+      isScrollControlled: true, // Allows the content to extend beyond the height of the screen
+      context: context,
+      builder: (BuildContext context) {
+        Size s = MediaQuery.of(context).size;
+        var helplist_watch=ref.watch(help_list_provider);
+
+            return Container(
+              height: height,
+              // padding: EdgeInsets.only(
+              //   bottom: MediaQuery.of(context).viewInsets.bottom,
+              // ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
+                    child: Row(
+                      children: [
+
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Icon(Icons.arrow_back, size: 30,),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  //margin:EdgeInsets.fromLTRB(100, 10, 100, 100)
+                                    margin: EdgeInsets.only(top: 10),
+                                    width: 180,
+                                    child: Image.asset("images/gp.png")),
+                              ),
+                            ],),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Text(
+                      'HELPPPPPPPPPPPPPPPPPPPPP Us',
+                      style: TextStyle(color: Color(0xff798DB1),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ExpansionPanelList(
+                    //animationDuration: Duration(milliseconds: 100),
+                    expansionCallback: (int index, bool isExpanded) {
+                      //help_list[index].isexpanded=!isExpanded;
+                      ref.read(help_list_provider.notifier).state[index].isexpanded = !ref.read(help_list_provider.notifier).state[index].isexpanded;
+
+                    },
+                    children: helplist_watch.map<ExpansionPanel>((
+                        ExpantionError e) {
+                      return ExpansionPanel(
+                        headerBuilder:
+                            (BuildContext context, bool isExpanded) {
+                          return ListTile(
+                            title: Text('Item 1' + e.text),
+                          );
+                        },
+                        body: ListTile(
+                          title: Text('Item 1 child'),
+                          subtitle: Text('Details goes here'),
+                        ),
+                        isExpanded: e.isexpanded,
+                      );
+                    }).toList(),
+
+                  )
+
+
+                ],
+              ),
+            );
+
+      },
+    );
+  }*/
+
+  //
   //
   //Forgot password
   //
   //
   Future<void> _showMyDialog() async {
     return showDialog<void>(
-
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must not tap button!
       builder: (BuildContext context) {
         Size s = MediaQuery.of(context).size;
         return AlertDialog(
-
           content:  SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -709,12 +812,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(7.0),
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text("Send")
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text("Send"),
+                      )
                   ),
                 ),
 
@@ -753,8 +859,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
 
 
+//
 
-}
+}//_MyHomePageState end
+
+//
+
 
 class Txtfield extends StatelessWidget {
   final Widget child;
