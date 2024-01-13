@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class onBoarding extends StatefulWidget {
@@ -13,6 +14,7 @@ class onBoarding extends StatefulWidget {
 class _onBoardingState extends State<onBoarding> {
 
   var page_controller=PageController();
+  var page_num=0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,10 @@ class _onBoardingState extends State<onBoarding> {
           children: [
               TextButton(
                 onPressed: (){
+                  if(page_num>1){
+                    context.pop();
+                  }
+                  page_num=2;
                   page_controller.jumpToPage(2);
                 },
                 child: Text("Skip"),
@@ -64,7 +70,12 @@ class _onBoardingState extends State<onBoarding> {
 
             TextButton(
               onPressed: (){
+                if(page_num>1){
+                  context.pop();
+                }
                 page_controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+                page_num++;
+
               },
               child: Text("Next"),
               style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue)),

@@ -5,6 +5,12 @@
   "rememberme": "Se souvenir de moi",
   "forgot": "Mot de passe oublié?",
   "login": "Se connecter",
+  "logout": "Se déconnecter",
+
+   "demo":"Démo",
+   "contact":"Contact",
+   "location":"Localisation",
+   "help":"Aide",
 
   "helloWorld": "Hello frenchh!",
   "@helloWorld": {

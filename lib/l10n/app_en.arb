@@ -5,6 +5,12 @@
   "rememberme": "Rememeber me",
   "forgot": "Fogot password?",
   "login": "Login",
+  "logout": "Log out",
+
+   "demo":"Demo",
+   "contact":"Contact",
+   "location":"Location",
+   "help":"Help",
 
   "helloWorld": "Hello World!",
   "@helloWorld": {

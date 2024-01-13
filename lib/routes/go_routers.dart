@@ -13,6 +13,7 @@ import '../map.dart';
 final goRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
+
     initialLocation: "/",
       routes: [
           GoRoute(

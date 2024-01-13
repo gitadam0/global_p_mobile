@@ -1,25 +1,67 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:global_p/widgets/CategoryItem.dart';
+import 'package:global_p/widgets/ContactBottomSheet.dart';
+import 'package:global_p/widgets/CustomBottomNavigationBar.dart';
+import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 
-import 'data.dart';
+import 'all_providers.dart';
+import 'data/data.dart';
 import 'main.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-class home extends StatefulWidget {
+class home extends ConsumerStatefulWidget {
   const home({Key? key}) : super(key: key);
 
+
   @override
-  State<home> createState() => _homeState();
+  _homeState createState() => _homeState();
 }
 
-class _homeState extends State<home> {
+class _homeState extends ConsumerState<home> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var selected_index=ref.watch(selectedIndex_bottomnav);
+    Size s = MediaQuery.of(context).size;
+    AppLocalizations? localizations = AppLocalizations.of(context);
+    //var auth2 = ref.watch(remember_me);
+    //var size = MediaQuery.of(context).size;
+    //final String lang = ref.watch(languageProvider);
+
     return Scaffold(
+
+
+        bottomNavigationBar: CustomBottomNavigationBar(
+          selectedTabIndex: selected_index,
+          onTabTapped: (value) {
+            if (value == 0) {
+              context.push("/onboarding");
+            }
+            if (value == 1) {
+              //_showBottomSheet_contact(context, s.height);
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) {
+                  return ContactBottomSheet();
+                },
+              );
+            }
+            if (value == 2) {
+              context.push('/map');
+            }
+            if (value == 3) {
+              context.push('/help');
+            }
+          },
+          localizations: localizations,
+        ),
+
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Color(0xFFFFFFFF),
@@ -35,7 +77,8 @@ class _homeState extends State<home> {
             //     // do something
             //   },
             // ),
-            DropdownButtonExample()
+            //DropdownButtonExample(),
+            LangDropdownButton()
 
           ],
           iconTheme: IconThemeData(
@@ -59,7 +102,7 @@ class _homeState extends State<home> {
               },
             ),
             ListTile(
-              title: const Text('Log out'),
+              title:  Text( AppLocalizations.of(context)!.logout.toString()),
               onTap: () {
                 //Navigator.pushReplacementNamed(context, "/login");
                 context.go('/login');
@@ -68,68 +111,26 @@ class _homeState extends State<home> {
           ],
         ),
       ),
-      body: Column(
+      body:
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
-          //   child: SizedBox(
-          //     height: 45,
-          //     child: TextField(
-          //       cursorHeight: 20,
-          //       decoration: InputDecoration(
-          //
-          //           prefixIcon: Icon(Icons.search),
-          //           fillColor: Colors.white,
-          //           filled: true,
-          //           border: OutlineInputBorder(
-          //             borderRadius: BorderRadius.all(Radius.circular(10)),
-          //           ),
-          //
-          //           hintText: 'Search Here...'),
-          //     ),
-          //   ),
-          // ),
           Expanded(
             child: GridView.count(
               padding: const EdgeInsets.symmetric(horizontal: 5,vertical:40),
               primary: false,
               crossAxisCount: 3,
                 childAspectRatio: 0.9,
-                children: [
-                  ...(Categorys.map((e){
-                    return Container(
-                      padding: EdgeInsets.all(0),
-                      child: Column(
-
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: ClipRRect(
-                                child: Image.asset(e.img,fit: BoxFit.fitHeight,),
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            height: 90,
-
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: Text(e.name,softWrap: false,),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  ))
-
+                children: [ for (var category in Categorys)
+                  CategoryItem(img: category.img, name: "name")
                 ],
             ),
           ),
         ],
       ),
+
       // Container(
       //   decoration: BoxDecoration(color: Colors.red),
       //   width: size.width/2,
@@ -155,49 +156,4 @@ class _homeState extends State<home> {
 }
 
 
-
-
-class DropdownButtonExample extends StatefulWidget {
-  //const DropdownButtonExample({super.key});
-
-
-  @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
-}
-
-
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-
-
-  String dropdownValue = list.first;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: DropdownButton<String>(
-        value: dropdownValue,
-
-        //elevation: 16,
-        style:
-        const TextStyle(color: Colors.black),
-
-        onChanged: (String? value) {
-          // This is called when the user selects an item.
-          print("dropdownValue.toString()");
-          setState(() {
-            dropdownValue = value!;
-
-          });
-        },
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
 

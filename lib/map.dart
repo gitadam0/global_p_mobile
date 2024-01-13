@@ -135,14 +135,13 @@ List<LatLng> polylineCoordinates=[];
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
 
         onPressed: () async {
 
           showlocal();
         },
-        label: const Text('To the mosque'),
-        icon: const Icon(Icons.mosque),
+        child: Icon(Icons.my_location_rounded),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );

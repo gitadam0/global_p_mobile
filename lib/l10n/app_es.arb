@@ -1,0 +1,21 @@
+{
+  "password": "contraseña",
+  "username": "nombre de usuario",
+  "signin": "Iniciar sesión",
+  "rememberme": "Acuérdate de mí",
+  "forgot": "Has olvidado tu contraseña?",
+  "login": "Acceso",
+  "logout": "Cerrar sesión",
+
+  "demo":"Manifestación",
+ "contact":"Contacto",
+ "location":"Ubicación",
+ "help":"Ayuda",
+
+  "helloWorld": "spanish World!",
+  "@helloWorld": {
+    "description": "The spanish spanish spanish greeting"
+  }
+
+
+}

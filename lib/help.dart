@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'data.dart';
+import 'data/data.dart';
 import 'models/expansion_error.dart';
 
 final help_list_provider = StateProvider.autoDispose((ref) {

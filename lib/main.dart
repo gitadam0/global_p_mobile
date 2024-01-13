@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:global_p/about.dart';
 import 'package:global_p/contact.dart';
-import 'package:global_p/data.dart';
+import 'package:global_p/data/data.dart';
 import 'package:global_p/models/expansion_error.dart';
 import 'package:global_p/routes/go_routers.dart';
 import 'package:global_p/splash.dart';
+import 'package:global_p/widgets/ContactBottomSheet.dart';
+import 'package:global_p/widgets/CustomBottomNavigationBar.dart';
+import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'all_providers.dart';
 import 'home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,9 +19,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'my_colors.dart';
 
 
-final myProvider = StateProvider.autoDispose((ref) {
-  return "en";
-});
 
 final remember_me = StateProvider.autoDispose((ref) {
   return false;
@@ -42,7 +43,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
 
 
-    final String lang = ref.watch(myProvider);
+    final String lang = ref.watch(languageProvider);
     //final String remember = ref.watch(myProvider);
     final router = ref.watch(goRouterProvider);
 
@@ -61,6 +62,7 @@ class MyApp extends ConsumerWidget {
       supportedLocales: [
         Locale('en'), // English
         Locale('fr'), // Spanish
+        Locale('es'), // Spanish
       ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -105,13 +107,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   var stepper_step=0;
 
-   String dropdownValue = list.first;
+  //String dropdownValue = lang_list.first;
   @override
   Widget build(BuildContext context) {
-
     var selected_index=ref.watch(selectedIndex_bottomnav);
     var auth2 = ref.watch(remember_me);
     Size s = MediaQuery.of(context).size;
+    AppLocalizations? localizations = AppLocalizations.of(context);
 
     //
     //
@@ -120,63 +122,38 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     //
 
     return Scaffold(
-
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: selected_index == -1 ? 0: selected_index,
-        selectedItemColor: selected_index == -1 ? Colors.grey[600] : Color(0xff798DB1),
-        unselectedItemColor: Colors.grey[600],
-        /*backgroundColor: colorScheme.surface,
-        selectedItemColor: colorScheme.onSurface,
-
-        selectedLabelStyle: textTheme.caption,
-        unselectedLabelStyle: textTheme.caption,
-        */
-
-        onTap: (value) {
-          // Respond to item press.
-          //ref.read(selectedIndex_bottomnav.notifier).state=value;
-          if (value==0){
-            context.push("/onboarding");
-          }
-          if (value==1){
-            _showBottomSheet_contact(context,s.height);
-          }
-          if (value==2){
-            //_openMap(33.580071,-7.635136);
-            context.push('/map');
-          }
-          if (value==3){
-            //_showBottomSheet_help(context,s.height);
-            context.push('/help');
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            label: 'Demo',
-            icon: Icon(Icons.phone_android_outlined),
-          ),
-          BottomNavigationBarItem(
-            label: 'Contact',
-            icon: Icon(Icons.call),
-          ),
-          BottomNavigationBarItem(
-            label: 'Location',
-            icon: Icon(Icons.location_on),
-          ),
-          BottomNavigationBarItem(
-              label: 'Help',
-            icon: Icon(Icons.contact_support),
-          ),
-        ],
-      ),
+       bottomNavigationBar: CustomBottomNavigationBar(
+      selectedTabIndex: selected_index,
+      onTabTapped: (value) {
+        if (value == 0) {
+          context.push("/onboarding");
+        }
+        if (value == 1) {
+          //_showBottomSheet_contact(context, s.height);
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return ContactBottomSheet();
+            },
+          );
+        }
+        if (value == 2) {
+          context.push('/map');
+        }
+        if (value == 3) {
+          context.push('/help');
+        }
+      },
+      localizations: localizations,
+    ),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xFFFFFFFF),
         centerTitle: true,
         title: Image.asset("images/gp.png",height: 40,),
           actions: <Widget>[
-            DropdownButtonExample(),
+            LangDropdownButton()
 
 
           ]
@@ -193,7 +170,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             //       child: Image.asset("images/gp.png")),
             // ),
             SizedBox(
-              height: 120,
+              height: 100,
             ),
             Padding(
               padding: const EdgeInsets.all(40.0),
@@ -203,12 +180,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     child: Text(
                       AppLocalizations.of(context)!.signin.toString(),
                       style:TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff798DB1)) ,
                     )
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             //
             //
@@ -289,7 +269,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
 
             Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               //decoration: BoxDecoration(color: Color(0x55000000)),
               width: s.width*0.8,
               child: Row(
@@ -300,7 +280,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   //Checkbox
                   //
                   Row(children: [
-                    Transform.scale(
+                    /*Transform.scale(
                       scale: 0.9,
                       child: Checkbox(
                         checkColor: Color(0xff000000),
@@ -312,23 +292,22 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           ref.read(remember_me.notifier).state=!ref.watch(remember_me);
                         },
                       ),
+                    ),*/
+                    Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        activeColor: Color(0xff798DB1),
+                        value: auth2,
+                        onChanged: (newValue) {
+                          ref.read(remember_me.notifier).state = !ref.watch(remember_me);
+                        },
+                      ),
                     ),
+
                     Text(AppLocalizations.of(context)!.rememberme.toString()),
 
 
                   ],),
-                  GestureDetector(
-                    onTap: (){
-                      _showMyDialog();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.forgot.toString(),
-                      style: TextStyle(
-                          color: Color(0xff000000),
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xff143a80)),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -360,6 +339,24 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 child: Text(AppLocalizations.of(context)!.login.toString()),
                 style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(), primary: Color(0xff798DB1)),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GestureDetector(
+                onTap: (){
+                  _showMyDialog();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.forgot.toString(),
+                  style: TextStyle(
+                      color: Color(0xff000000),
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color(0xff143a80),fontSize: 15),
+
+
+                ),
               ),
             ),
 
@@ -533,7 +530,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   //Contact
   //
   //
-  void _showBottomSheet_contact(BuildContext context,double height) {
+  /*void _showBottomSheet_contact(BuildContext context,double height) {
     showModalBottomSheet(
       context: context,
 
@@ -657,7 +654,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         );
       },
     );
-  }
+  }*/
+
+
 
   /*//
   //
@@ -906,46 +905,7 @@ class Txtfield extends StatelessWidget {
 //   );
 // }
 
-const List<String> list = <String>['en', 'fr'];
 
-
-class DropdownButtonExample extends ConsumerStatefulWidget   {
-  //const DropdownButtonExample({super.key});
-  const DropdownButtonExample({Key? key}): super(key: key);
-
-
-  @override
-  _DropdownButtonExampleState createState() => _DropdownButtonExampleState();
-}
-
-
-class _DropdownButtonExampleState extends ConsumerState<DropdownButtonExample> {
-
-  String dropdownValue = list.first;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: DropdownButton<String>(
-        value: dropdownValue,
-        elevation: 16,
-        style: const TextStyle(color: Colors.black),
-        onChanged: (String? value) {
-          // This is called when the user selects an item.
-            dropdownValue = value!;
-            ref.read(myProvider.notifier).state=dropdownValue;
-        },
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
 
 //
 //
