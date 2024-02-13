@@ -155,14 +155,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
-  flutter_polyline_points:
-    dependency: "direct main"
-    description:
-      name: flutter_polyline_points
-      sha256: "0e07862139cb65a88789cd6efbe284c0b6f1fcb5ed5ec87781759c48190d84b9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -297,10 +289,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -389,6 +381,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  odoo_rpc:
+    dependency: "direct main"
+    description:
+      name: odoo_rpc
+      sha256: "735cad4a40dcba251f9a2441223d511d9f23fcc79c2c1e0faa773cb2996019cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.5"
   onboarding:
     dependency: "direct main"
     description:
@@ -405,6 +405,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.11.1"
   petitparser:
     dependency: transitive
     description:

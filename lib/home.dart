@@ -34,8 +34,6 @@ class _homeState extends ConsumerState<home> {
     //final String lang = ref.watch(languageProvider);
 
     return Scaffold(
-
-
         bottomNavigationBar: CustomBottomNavigationBar(
           selectedTabIndex: selected_index,
           onTabTapped: (value) {
@@ -68,16 +66,6 @@ class _homeState extends ConsumerState<home> {
           centerTitle: true,
           title: Image.asset("images/gp.png",height: 40,),
           actions: <Widget>[
-            // IconButton(
-            //   icon: Icon(
-            //     Icons.settings,
-            //     color: Color(0xff798DB1),
-            //   ),
-            //   onPressed: () {
-            //     // do something
-            //   },
-            // ),
-            //DropdownButtonExample(),
             LangDropdownButton()
 
           ],
@@ -124,32 +112,14 @@ class _homeState extends ConsumerState<home> {
               crossAxisCount: 3,
                 childAspectRatio: 0.9,
                 children: [ for (var category in Categorys)
-                  CategoryItem(img: category.img, name: "name")
+                  CategoryItem(img: category.img, name: category.name)
                 ],
             ),
           ),
         ],
       ),
 
-      // Container(
-      //   decoration: BoxDecoration(color: Colors.red),
-      //   width: size.width/2,
-      //   height: 150,
-      //   child: Card(
-      //
-      //     child: Padding(
-      //       padding: const EdgeInsets.all(10),
-      //       child: Column(children: [
-      //        Container(
-      //
-      //            width:100,
-      //            child: Image.asset("images/gp.png")),
-      //
-      //
-      //       ],),
-      //     ),
-      //   ),
-      // ),
+
 
     );
   }

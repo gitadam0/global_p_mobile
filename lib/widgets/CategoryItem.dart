@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+// import 'CategoryDetailPage.dart';
 
 class CategoryItem extends StatelessWidget {
   final String img;
@@ -8,27 +10,32 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: ClipRRect(
-              child: Image.asset(
-                img,
-                fit: BoxFit.fitHeight,
+    return GestureDetector(
+      onTap: () {
+        context.pushNamed('categoryDetails',pathParameters: {'id1': name, 'id2': name} );
+      },
+      child: Container(
+        padding: EdgeInsets.all(0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: ClipRRect(
+                child: Image.asset(
+                  img,
+                  fit: BoxFit.fitHeight,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
+              height: 90,
             ),
-            height: 90,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(name, softWrap: false),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(name, softWrap: false),
+            ),
+          ],
+        ),
       ),
     );
   }
