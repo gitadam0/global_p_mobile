@@ -8,9 +8,10 @@ import 'package:global_p/splash.dart';
 import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:go_router/go_router.dart';
 
+import '../categoryDetailsPages/CategoryDetailsCRC.dart';
+import '../categoryDetailsPages/CategoryDetailsContacts.dart';
 import '../main.dart';
 import '../map.dart';
-import '../widgets/categoryDetails/CategoryDetails.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
 
@@ -42,13 +43,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: "/help",
             builder: (context,state) => Help()
         ),
-        GoRoute(
+        /*GoRoute(
           path: '/categoryDetails/:id1/:id2',  // 👈 Defination of params in the path is important
           name: 'categoryDetails',
           builder: (context, state) => CategoryDetails(
             id1: state.pathParameters['id1'],
             id2: state.pathParameters['id2'],
           ),
+        ),*/
+        GoRoute(
+          path: '/CategoryDetailsCRC',
+          builder: (context, state) => CategoryDetailsCRC(),
+        ),
+  GoRoute(
+          path: '/CategoryDetailsContacts',
+          builder: (context, state) => CategoryDetailsContacts(),
         ),
   ]);
 });

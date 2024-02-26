@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:global_p/widgets/ContactBottomSheet.dart';
 import 'package:global_p/widgets/CustomBottomNavigationBar.dart';
-import 'package:global_p/widgets/categoryDetails/RelationClientTicketListPage.dart';
 import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
@@ -21,18 +20,15 @@ import 'PartnerListPage.dart';
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
 final orpc = OdooClient('http://83.171.249.157:8069');
-class CategoryDetails extends ConsumerStatefulWidget {
-  var id1;
-  var id2;
-
-   CategoryDetails({Key? key,this.id1, this.id2}) : super(key: key);
+class CategoryDetailsCRC extends ConsumerStatefulWidget {
+  CategoryDetailsCRC({Key? key}) : super(key: key);
 
 
   @override
-  _CategoryDetails createState() => _CategoryDetails();
+  _CategoryDetailsCRC createState() => _CategoryDetailsCRC();
 }
 
-class _CategoryDetails extends ConsumerState<CategoryDetails> {
+class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
 
   @override
   Widget build(BuildContext context) {
@@ -84,23 +80,7 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
     ]
     ;
 
-    var id1Value = widget.id1;
-    var pageName = widget.id2;
-    Future<dynamic> fetchContacts() async {
-      //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
-      await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
-      return orpc.callKw({
-        'model': 'res.partner',
-        'method': 'search_read',
-        'args': [],
-        'kwargs': {
-          'context': {'bin_size': true},
-          'domain': [],
-          'fields': ['id', 'name', 'email', '__last_update', 'image_128','active'],
-          'limit': 80,
-        },
-      });
-    }
+
     Future<dynamic> fetchCentreDeRelationClient() async {
       //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
       await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
@@ -141,33 +121,18 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
       });
     }
 
-    Future<int> createPartner() async {
-
-      //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
-
-      var result = await orpc.callKw({
-        'model': 'res.partner',
-        'method': 'create',
-        'args': [
-            {'name': 'A1','email':'ADAMMOUADDINETEST@GMAIL'},
-        ],
-        'kwargs': {}, // Add an empty kwargs map
-      });
-
-      return result as int;
-    }
 
 
 
-//show's page for each category
-    Widget buildCategoryWidget(String categoryName) {
 
 
-      if (categoryName == "Centre De Relation Client") {
+    Widget buildTickets() {
+
+
+        /*//from database
         //from database
         //from database
-        //from database
-        /*return FutureBuilder(
+        *//*return FutureBuilder(
             future: fetchCentreDeRelationClient(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
@@ -182,60 +147,14 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
                 if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
                 return CircularProgressIndicator();
               }
-            });*/
+            });*//*
         //from offline
         //from offline
-        //from offline
+        //from offline*/
         return RelationClientTicketListItemtestinglocaldata(testTicketList );
 
-        // for testing purposes
-        // for testing purposes
-        // for testing purposes
-        /*return  FutureBuilder(
-           future: fetchCentreDeRelationClient(),
-           builder: (context, snapshot) {
-             if (snapshot.connectionState == ConnectionState.waiting) {
-               return CircularProgressIndicator();
-             } else if (snapshot.hasError) {
-               return Text('Error: ${snapshot.error}');
-             } else {
-               // Use the data from the snapshot
-               var data = snapshot.data;
-               log(data.toString());
-
-               return Text('Centre De Relation Client: $data');
-             }
-           },
-         );*/
-      }
-      else if (categoryName == "Contacts") {
-        return FutureBuilder(
-            future: fetchContacts(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      final record = snapshot.data[index] as Map<String, dynamic>;
-                      return buildPartnerListItem(record);
-                    });
-              } else {
-                if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
-                return CircularProgressIndicator();
-              }
-            });
-      }
-      else if (categoryName == "CRM") {
-        return Container(
-          child: Text('Widget for CRM'),
-        );
-      }
 
 
-      // Default case, you can return a generic widget or null
-      return Container(
-        child: Text('no page found'),
-      );
     }
 
 
@@ -281,25 +200,24 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         ),
       ),
       body:Center(
-        child: pageName!=null?
-        buildCategoryWidget(pageName) :Text(pageName),
+        child: Column(
+          children: [
+            Expanded(child: buildTickets()),
+          ],
+        )
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
-        onPressed: (){
+        onPressed: (){/*
           createPartner();
           setState(() {
             fetchContacts();
           });
 
-        },
+        */},
         mini: true,
         child: const Icon(Icons.add, color: Colors.white, size: 25),
       ),
-
-
-
-
     );
 
   }
@@ -307,42 +225,6 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
 
 
 
-Widget buildPartnerListItem(Map<String, dynamic> record) {
-  var unique = record['__last_update'] as String;
-  unique = unique.replaceAll(RegExp(r'[^0-9]'), '');
-  final avatarUrl = '${orpc.baseURL}/web/image?model=res.partner&field=image_128&id=${record["id"]}&unique=$unique';
-  return Card(
-    elevation: 3,
-    margin: EdgeInsets.all(10),
-    child: ListTile(
-      leading: Container(
-        width: 70, // Set the width as needed for your square image
-        height: 70, // Set the height as needed for your square image
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-                avatarUrl
-              // 'http://192.168.1.44:8069/web/image?model=res.partner&field=image_128&id=27&unique=2023-12-25%2022:24:06',
-            ),
-          ),
-        ),
-      ),
-      title: Text('${record['name']}'),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Email:${record['email'] is String ? record['email'] : ''}'),
-          //Text('ID: ${record['id']}'),
-          Text('Last Update: ${record['__last_update']}'),
-          Text('active: ${record['active']}'),
-          //Text('Base URL: ${orpc.baseURL}'),
-        ],
-      ),
-    ),
-  );
-}
 
 Widget RelationClientTicketListItem(Map<String, dynamic> record,BuildContext context) {
 

@@ -1,3 +1,4 @@
+/*
 // PartnerListPage.dart
 import 'package:flutter/material.dart';
 
@@ -49,3 +50,4 @@ class PartnerListPage extends StatelessWidget {
     );
   }
 }
+*/
