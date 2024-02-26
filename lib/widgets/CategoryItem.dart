@@ -13,6 +13,16 @@ class CategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.pushNamed('categoryDetails',pathParameters: {'id1': name, 'id2': name} );
+        if (name == "Centre De Relation Client") {
+
+        }
+        else if (name == "Contacts") {
+
+        }
+        else if (name == "CRM") {
+
+        }
+
       },
       child: Container(
         padding: EdgeInsets.all(0),

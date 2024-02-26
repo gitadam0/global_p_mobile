@@ -75,7 +75,6 @@ class _onBoardingState extends State<onBoarding> {
                 }
                 page_controller.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
                 page_num++;
-
               },
               child: Text("Next"),
               style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue)),

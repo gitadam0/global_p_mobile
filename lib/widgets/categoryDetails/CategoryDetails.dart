@@ -54,19 +54,19 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         active: true,
         emailSubject: "a.karjout@globalperformance.ma",
         isFastTrack: false,
-        progress: 0.75,
+        progress: 1,
       ), Ticket(
         name: "Ticket2",
         personName: "Anomalie de virement instantane journal",
         companyId: "Global Performance Business",
-        doneStageBoolean: true,
+        doneStageBoolean: false,
         reopenStageBoolean: false,
         cancelStageBoolean: true,
         closedStageBoolean: false,
         active: true,
         emailSubject: "a.karjout@gmail.ma",
         isFastTrack: false,
-        progress: 0.75,
+        progress: 0.45,
       ),
       Ticket(
         name: "Ticket3",
@@ -79,13 +79,13 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         active: true,
         emailSubject: "adm.mdd@gmail.com",
         isFastTrack: false,
-        progress: 0.75,
+        progress: 0.15,
       ),
     ]
     ;
 
     var id1Value = widget.id1;
-    var id2Value = widget.id2;
+    var pageName = widget.id2;
     Future<dynamic> fetchContacts() async {
       //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
       await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
@@ -159,7 +159,7 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
 
 
 
-
+//show's page for each category
     Widget buildCategoryWidget(String categoryName) {
 
 
@@ -167,7 +167,7 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         //from database
         //from database
         //from database
-        return FutureBuilder(
+        /*return FutureBuilder(
             future: fetchCentreDeRelationClient(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
@@ -176,17 +176,17 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
                     itemBuilder: (context, index) {
                       final record =
                       snapshot.data[index] as Map<String, dynamic>;
-                      return RelationClientTicketListItem(record);
+                      return RelationClientTicketListItem(record,context);
                     });
               } else {
                 if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
                 return CircularProgressIndicator();
               }
-            });
+            });*/
         //from offline
         //from offline
         //from offline
-        //return RelationClientTicketListItemtestinglocaldata(testTicketList );
+        return RelationClientTicketListItemtestinglocaldata(testTicketList );
 
         // for testing purposes
         // for testing purposes
@@ -207,7 +207,8 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
              }
            },
          );*/
-      } else if (categoryName == "Contacts") {
+      }
+      else if (categoryName == "Contacts") {
         return FutureBuilder(
             future: fetchContacts(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -223,7 +224,8 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
                 return CircularProgressIndicator();
               }
             });
-      } else if (categoryName == "CRM") {
+      }
+      else if (categoryName == "CRM") {
         return Container(
           child: Text('Widget for CRM'),
         );
@@ -265,7 +267,6 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         },
         localizations: localizations,
       ),
-
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xFFFFFFFF),
@@ -280,13 +281,8 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         ),
       ),
       body:Center(
-        child:
-        id2Value!=null?
-        //
-        //show's page for each category
-        //
-        buildCategoryWidget(id2Value)
-        :Text(id2Value),
+        child: pageName!=null?
+        buildCategoryWidget(pageName) :Text(pageName),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
@@ -348,7 +344,7 @@ Widget buildPartnerListItem(Map<String, dynamic> record) {
   );
 }
 
-Widget RelationClientTicketListItem(Map<String, dynamic> record) {
+Widget RelationClientTicketListItem(Map<String, dynamic> record,BuildContext context) {
 
   return Card(
     elevation: 3,
@@ -359,21 +355,42 @@ Widget RelationClientTicketListItem(Map<String, dynamic> record) {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Company Name:${record["company_id"][1]} ' ),
-          //Text('ID: ${record['id']}'),
-          Text('person_name: ${record['person_name']}'),
+          Text('${record['email_subject']}'),
+          Text('${record["company_id"][1]} ' ),
+          if (record['person_name']!="") Text('${record['person_name']}'),
           Text('active: ${record['active']}'),
-          record['done_stage_boolean'] ? Text('done_stage_boolean: ${record['done_stage_boolean']}') : Container(),
-          record['reopen_stage_boolean'] ? Text('reopen_stage_boolean: ${record['reopen_stage_boolean']}') : Container(),
-          record['closed_stage_boolean'] ? Text('closed_stage_boolean: ${record['closed_stage_boolean']}') : Container(),
-          record['cancel_stage_boolean'] ? Text('cancel_stage_boolean: ${record['cancel_stage_boolean']}') : Container(),
-          Text('done_stage_boolean: ${record['done_stage_boolean']}'),
-          Text('reopen_stage_boolean: ${record['reopen_stage_boolean']}'),
-          Text('closed_stage_boolean: ${record['closed_stage_boolean']}'),
-          Text('cancel_stage_boolean: ${record['cancel_stage_boolean']}'),
-          Text('email_subject: ${record['email_subject']}'),
+          if (record['done_stage_boolean']) RoundedStatusWidget("done stage",Colors.green),
+          if (record['reopen_stage_boolean']) RoundedStatusWidget("reopen stage",Color.fromRGBO(
+              255, 228, 0, 1.0)),
+          if (record['closed_stage_boolean']) RoundedStatusWidget("closed stage",Colors.redAccent),
+          if (record['cancel_stage_boolean']) RoundedStatusWidget("cancel stage",Colors.red),
+          if (!record['done_stage_boolean'] && !record['reopen_stage_boolean'] && !record['closed_stage_boolean'] && !record['cancel_stage_boolean'])
+            RoundedStatusWidget("new stage",Color.fromRGBO(
+                19, 103, 20, 1.0)),
           Text('is_fast_track: ${record['is_fast_track']}'),
-          Text('progress: ${record['progress']}'),
+          //Text('progress: ${record['progress']}'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 8, // Set the height as per your design
+                width: MediaQuery.of(context).size.width* 0.7, // Adjust the width as needed
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), // Adjust the radius as needed
+                  border: Border.all(color: Colors.grey), // Adjust the border color as needed
+                ),
+                child: LinearProgressIndicator(
+                  value: record['progress'], // Assuming progress is a double between 0 and 1
+                  minHeight: 8,
+                  backgroundColor: Colors.grey,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                ),
+              ),
+
+              Text('${record['progress']}%'),
+            ],
+          ),
+
           //Text('Base URL: ${orpc.baseURL}'),
         ],
       ),
@@ -399,7 +416,7 @@ Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
               Text('${record.personName}'),
               Text('active: ${record.active}'),
               Text('${record.emailSubject}'),
-              if (record.doneStageBoolean) RoundedStatusWidget("done stage",Colors.green),
+              if (record.doneStageBoolean) RoundedStatusWidget("done stage",Colors.grey),
               if (record.reopenStageBoolean) RoundedStatusWidget("reopen stage",Colors.yellow),
               if (record.closedStageBoolean) RoundedStatusWidget("closed stage",Colors.redAccent),
               if (record.cancelStageBoolean) RoundedStatusWidget("cancel stage",Colors.red),
@@ -408,6 +425,27 @@ Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
                     19, 103, 20, 1.0)),
               Text('is_fast_track: ${record.isFastTrack}'),
               Text('progress: ${record.progress}'),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 8, // Set the height as per your design
+                    width: MediaQuery.of(context).size.width* 0.7, // Adjust the width as needed
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4), // Adjust the radius as needed
+                      border: Border.all(color: Colors.grey), // Adjust the border color as needed
+                    ),
+                    child: LinearProgressIndicator(
+                      value: record.progress, // Assuming progress is a double between 0 and 1
+                      minHeight: 8,
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                    ),
+                  ),
+
+                  Text((record.progress*100).toString()+'%'),
+                ],
+              ),
             ],
           ),
         ),
