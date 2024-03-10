@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:global_p/widgets/ContactBottomSheet.dart';
@@ -15,23 +16,21 @@ import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/Ticket.dart';
+import '../my_colors.dart';
 import 'PartnerListPage.dart';
 
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
 final orpc = OdooClient('http://83.171.249.157:8069');
-class CategoryDetails extends ConsumerStatefulWidget {
-  var id1;
-  var id2;
-
-   CategoryDetails({Key? key,this.id1, this.id2}) : super(key: key);
+class CategoryDetailsCRCReopend extends ConsumerStatefulWidget {
+  CategoryDetailsCRCReopend({Key? key}) : super(key: key);
 
 
   @override
-  _CategoryDetails createState() => _CategoryDetails();
+  _CategoryDetailsCRCReopend createState() => _CategoryDetailsCRCReopend();
 }
 
-class _CategoryDetails extends ConsumerState<CategoryDetails> {
+class _CategoryDetailsCRCReopend extends ConsumerState<CategoryDetailsCRCReopend> {
 
   @override
   Widget build(BuildContext context) {
@@ -41,65 +40,9 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
     //var auth2 = ref.watch(remember_me);
     //var size = MediaQuery.of(context).size;
     //final String lang = ref.watch(languageProvider);
-    List<Ticket> testTicketList = [
-      Ticket(
-        name: "Ticket1",
-        personName: "Problem d'exeuction",
-        companyId: "Global Performance Business",
-        doneStageBoolean: true,
-        reopenStageBoolean: false,
-        cancelStageBoolean: false,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "a.karjout@globalperformance.ma",
-        isFastTrack: false,
-        progress: 1,
-      ), Ticket(
-        name: "Ticket2",
-        personName: "Anomalie de virement instantane journal",
-        companyId: "Global Performance Business",
-        doneStageBoolean: false,
-        reopenStageBoolean: false,
-        cancelStageBoolean: true,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "a.karjout@gmail.ma",
-        isFastTrack: false,
-        progress: 0.45,
-      ),
-      Ticket(
-        name: "Ticket3",
-        personName: "John Doe",
-        companyId: "123",
-        doneStageBoolean: false,
-        reopenStageBoolean: false,
-        cancelStageBoolean: false,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "adm.mdd@gmail.com",
-        isFastTrack: false,
-        progress: 0.15,
-      ),
-    ]
-    ;
 
-    var id1Value = widget.id1;
-    var pageName = widget.id2;
-    Future<dynamic> fetchContacts() async {
-      //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
-      await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
-      return orpc.callKw({
-        'model': 'res.partner',
-        'method': 'search_read',
-        'args': [],
-        'kwargs': {
-          'context': {'bin_size': true},
-          'domain': [],
-          'fields': ['id', 'name', 'email', '__last_update', 'image_128','active'],
-          'limit': 80,
-        },
-      });
-    }
+
+
     Future<dynamic> fetchCentreDeRelationClient() async {
       //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
       await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
@@ -140,33 +83,18 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
       });
     }
 
-    Future<int> createPartner() async {
-
-      //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
-
-      var result = await orpc.callKw({
-        'model': 'res.partner',
-        'method': 'create',
-        'args': [
-            {'name': 'A1','email':'ADAMMOUADDINETEST@GMAIL'},
-        ],
-        'kwargs': {}, // Add an empty kwargs map
-      });
-
-      return result as int;
-    }
 
 
 
-//show's page for each category
-    Widget buildCategoryWidget(String categoryName) {
 
 
-      if (categoryName == "Centre De Relation Client") {
+    Widget buildTickets() {
+
+
+        /*//from database
         //from database
         //from database
-        //from database
-        /*return FutureBuilder(
+        *//*return FutureBuilder(
             future: fetchCentreDeRelationClient(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
@@ -181,60 +109,14 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
                 if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
                 return CircularProgressIndicator();
               }
-            });*/
+            });*//*
         //from offline
         //from offline
-        //from offline
+        //from offline*/
         return RelationClientTicketListItemtestinglocaldata(testTicketList );
 
-        // for testing purposes
-        // for testing purposes
-        // for testing purposes
-        /*return  FutureBuilder(
-           future: fetchCentreDeRelationClient(),
-           builder: (context, snapshot) {
-             if (snapshot.connectionState == ConnectionState.waiting) {
-               return CircularProgressIndicator();
-             } else if (snapshot.hasError) {
-               return Text('Error: ${snapshot.error}');
-             } else {
-               // Use the data from the snapshot
-               var data = snapshot.data;
-               log(data.toString());
-
-               return Text('Centre De Relation Client: $data');
-             }
-           },
-         );*/
-      }
-      else if (categoryName == "Contacts") {
-        return FutureBuilder(
-            future: fetchContacts(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      final record = snapshot.data[index] as Map<String, dynamic>;
-                      return buildPartnerListItem(record);
-                    });
-              } else {
-                if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
-                return CircularProgressIndicator();
-              }
-            });
-      }
-      else if (categoryName == "CRM") {
-        return Container(
-          child: Text('Widget for CRM'),
-        );
-      }
 
 
-      // Default case, you can return a generic widget or null
-      return Container(
-        child: Text('no page found'),
-      );
     }
 
 
@@ -280,68 +162,225 @@ class _CategoryDetails extends ConsumerState<CategoryDetails> {
         ),
       ),
       body:Center(
-        child: pageName!=null?
-        buildCategoryWidget(pageName) :Text(pageName),
+        child: Column(
+          children: [
+            Expanded(child: buildTickets()),
+          ],
+        )
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
-        onPressed: (){
+        onPressed: (){/*
           createPartner();
           setState(() {
             fetchContacts();
-          });
-
+          });*/
+          _showMyDialog();
         },
         mini: true,
         child: const Icon(Icons.add, color: Colors.white, size: 25),
       ),
-
-
-
-
     );
 
   }
-}
 
 
 
-Widget buildPartnerListItem(Map<String, dynamic> record) {
-  var unique = record['__last_update'] as String;
-  unique = unique.replaceAll(RegExp(r'[^0-9]'), '');
-  final avatarUrl = '${orpc.baseURL}/web/image?model=res.partner&field=image_128&id=${record["id"]}&unique=$unique';
-  return Card(
-    elevation: 3,
-    margin: EdgeInsets.all(10),
-    child: ListTile(
-      leading: Container(
-        width: 70, // Set the width as needed for your square image
-        height: 70, // Set the height as needed for your square image
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-                avatarUrl
-              // 'http://192.168.1.44:8069/web/image?model=res.partner&field=image_128&id=27&unique=2023-12-25%2022:24:06',
+
+  //
+  //
+  //create ticket
+  //
+  //
+  Future<void> _showMyDialog() async {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController companyController = TextEditingController();
+    TextEditingController percentageController = TextEditingController();
+
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must not tap button!
+      builder: (BuildContext context) {
+        Size s = MediaQuery.of(context).size;
+        return AlertDialog(
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+
+                    Icon(Icons.receipt_long,size:60,color: mcgpalette0,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('Create Ticket'),
+                    ),
+                  ],
+                ),
+
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      //ticket name
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a name';
+                            }
+                            return null;
+                          },
+                          controller: nameController,
+                          decoration: InputDecoration(
+                            labelText: 'Ticket Name',
+                            labelStyle:TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(),
+                            /*suffixIcon: Icon(
+                              Icons.person,
+                            ),*/
+                            focusedBorder:  OutlineInputBorder(
+                              borderSide:  BorderSide(color: Colors.black ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //ticket company
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: companyController,
+                          decoration: InputDecoration(
+                            labelText: 'Company',
+                            labelStyle:TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(),
+                            focusedBorder:  OutlineInputBorder(
+                              borderSide:  BorderSide(color: Colors.black ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //ticket ppercentage
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a percentage';
+                            }
+                            if (double.parse(value)  <0 ) {
+                              return 'percentage should be more then0';
+                            }
+                            if (double.parse(value)  >100 ) {
+                              percentageController.text="100";
+                              return null;
+                            }
+                            return null;
+                          },
+                          controller: percentageController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Percentage %',
+                            labelStyle:TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(),
+                            focusedBorder:  OutlineInputBorder(
+                              borderSide:  BorderSide(color: Colors.black ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
+                Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          // Validate the form
+                          if (_formKey.currentState!.validate()) {
+                            testTicketList.add(
+                                Ticket(
+                                    name: nameController.text, personName: "personName",
+                                    companyId: "companyId",
+                                    doneStageBoolean: false,
+                                    reopenStageBoolean: false,
+                                    cancelStageBoolean: false,
+                                    closedStageBoolean: false,
+                                    active: false, emailSubject: "emailSubject",
+                                    isFastTrack: false,
+                                    progress: (double.parse(percentageController.text)/100)
+                                )
+                            );
+                            print(double.parse(percentageController.text)/100);
+                            setState(() {
+                            });
+                            Navigator.of(context).pop();
+                          } else {
+
+                            print('Button clicked with empty TextField');
+                          }
+                        });
+                        // if(nameController.text.trim().isEmpty || int.parse(percentageController.text) <0){
+                        //   print("error check log");
+                        // }else{
+                        //   /*//createPartner(nameController.text);
+                        //   setState(() {
+                        //     //fetchContacts();
+                        //   });*/
+                        //
+                        //   if(double.parse(percentageController.text)>100){
+                        //     percentageController.text="100";
+                        //   }
+                        //   testTicketList.add(
+                        //       Ticket(
+                        //           name: nameController.text, personName: "personName",
+                        //           companyId: "companyId",
+                        //           doneStageBoolean: false,
+                        //           reopenStageBoolean: false,
+                        //           cancelStageBoolean: false,
+                        //           closedStageBoolean: false,
+                        //           active: false, emailSubject: "emailSubject",
+                        //           isFastTrack: false,
+                        //           progress: (double.parse(percentageController.text)/100)
+                        //       )
+                        //   );
+                        //   print(double.parse(percentageController.text)/100);
+                        //   setState(() {
+                        //   });
+                        //   Navigator.of(context).pop();
+                        // }
+
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text("Create"),
+                      )
+                  ),
+                ),
+
+              ],
             ),
           ),
-        ),
-      ),
-      title: Text('${record['name']}'),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Email:${record['email'] is String ? record['email'] : ''}'),
-          //Text('ID: ${record['id']}'),
-          Text('Last Update: ${record['__last_update']}'),
-          Text('active: ${record['active']}'),
-          //Text('Base URL: ${orpc.baseURL}'),
-        ],
-      ),
-    ),
-  );
+        );
+      },
+    );
+  }
+
+
+
 }
+
+
+
 
 Widget RelationClientTicketListItem(Map<String, dynamic> record,BuildContext context) {
 
@@ -400,9 +439,12 @@ Widget RelationClientTicketListItem(Map<String, dynamic> record,BuildContext con
 Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
   return ListView.builder(
     itemCount: ticketList.length,
+
     itemBuilder: (context, index) {
       Ticket record = ticketList[index];
-
+      if (!record.reopenStageBoolean) {
+        return Container(); // or return null;
+      }
       return Card(
         elevation: 3,
         margin: EdgeInsets.all(10),

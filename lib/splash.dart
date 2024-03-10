@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'main.dart';
+import 'mainLogin.dart';
 
 class splash extends StatefulWidget {
   const splash({Key? key}) : super(key: key);

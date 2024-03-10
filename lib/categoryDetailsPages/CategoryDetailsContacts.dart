@@ -3,13 +3,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:global_p/mainLogin.dart';
 import 'package:global_p/widgets/ContactBottomSheet.dart';
 import 'package:global_p/widgets/CustomBottomNavigationBar.dart';
 import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
 
-import '../../main.dart';
+
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

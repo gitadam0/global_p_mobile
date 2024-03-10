@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/Ticket.dart';
 import '../models/category.dart';
 import '../models/expansion_error.dart';
 
@@ -24,3 +25,58 @@ var help_list=[
 
 
 const List<String> lang_list = <String>['en','fr',"es"];
+
+List<Ticket> testTicketList = [
+   Ticket(
+      name: "Ticket1",
+      personName: "Problem d'exeuction",
+      companyId: "Global Performance Business",
+      doneStageBoolean: true,
+      reopenStageBoolean: false,
+      cancelStageBoolean: false,
+      closedStageBoolean: false,
+      active: true,
+      emailSubject: "a.karjout@globalperformance.ma",
+      isFastTrack: false,
+      progress: 1,
+   ), Ticket(
+      name: "Ticket2",
+      personName: "Anomalie de virement instantane journal",
+      companyId: "Global Performance Business",
+      doneStageBoolean: false,
+      reopenStageBoolean: false,
+      cancelStageBoolean: true,
+      closedStageBoolean: false,
+      active: true,
+      emailSubject: "a.karjout@gmail.ma",
+      isFastTrack: false,
+      progress: 0.45,
+   ),
+   Ticket(
+      name: "Ticket3",
+      personName: "John Doe",
+      companyId: "123",
+      doneStageBoolean: false,
+      reopenStageBoolean: false,
+      cancelStageBoolean: false,
+      closedStageBoolean: false,
+      active: true,
+      emailSubject: "adm.mdd@gmail.com",
+      isFastTrack: false,
+      progress: 0.15,
+   ),
+   Ticket(
+      name: "Ticket3",
+      personName: "John Doe",
+      companyId: "123",
+      doneStageBoolean: false,
+      reopenStageBoolean: true,
+      cancelStageBoolean: false,
+      closedStageBoolean: true,
+      active: true,
+      emailSubject: "adm.mdd@gmail.com",
+      isFastTrack: false,
+      progress: 0.15,
+   ),
+]
+;

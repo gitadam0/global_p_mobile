@@ -16,6 +16,7 @@ class CategoryItem extends StatelessWidget {
         if (name == "Centre De Relation Client") {
           print("Centre De Relation Client");
           context.push('/CategoryDetailsCRC' );
+          //context.push('/CategoryDetailsCRCNew' );
         }
         else if (name == "Contacts") {
           context.push('/CategoryDetailsContacts' );
@@ -26,12 +27,12 @@ class CategoryItem extends StatelessWidget {
 
       },
       child: Container(
-        padding: EdgeInsets.all(0),
+        margin: EdgeInsets.only(bottom: 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              margin: EdgeInsets.only(top: 24),
               child: ClipRRect(
                 child: Image.asset(
                   img,
@@ -43,7 +44,7 @@ class CategoryItem extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: Text(name, softWrap: false),
+              child: Text(name,textAlign: TextAlign.center,softWrap: true,),
             ),
           ],
         ),

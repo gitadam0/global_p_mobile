@@ -1,6 +1,9 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCClosed.dart';
+import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCNew.dart';
+import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCReopend.dart';
 import 'package:global_p/help.dart';
 import 'package:global_p/home.dart';
 import 'package:global_p/onboarding.dart';
@@ -9,8 +12,10 @@ import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:go_router/go_router.dart';
 
 import '../categoryDetailsPages/CategoryDetailsCRC.dart';
+import '../categoryDetailsPages/CategoryDetailsCRCDone.dart';
+import '../categoryDetailsPages/CategoryDetailsCRCanceled.dart';
 import '../categoryDetailsPages/CategoryDetailsContacts.dart';
-import '../main.dart';
+import '../mainLogin.dart';
 import '../map.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -55,9 +60,29 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           path: '/CategoryDetailsCRC',
           builder: (context, state) => CategoryDetailsCRC(),
         ),
-  GoRoute(
+        GoRoute(
+          path: '/CategoryDetailsCRCNew',
+          builder: (context, state) => CategoryDetailsCRCNew(),
+        ),
+        GoRoute(
+          path: '/CategoryDetailsCRCDone',
+          builder: (context, state) => CategoryDetailsCRCDone(),
+        ),
+        GoRoute(
           path: '/CategoryDetailsContacts',
           builder: (context, state) => CategoryDetailsContacts(),
+        ),
+   GoRoute(
+          path: '/CategoryDetailsCRCanceled',
+          builder: (context, state) => CategoryDetailsCRCanceled(),
+        ),
+    GoRoute(
+          path: '/CategoryDetailsCRCReopend',
+          builder: (context, state) => CategoryDetailsCRCReopend(),
+        ),
+    GoRoute(
+          path: '/CategoryDetailsCRCClosed',
+          builder: (context, state) => CategoryDetailsCRCClosed(),
         ),
   ]);
 });

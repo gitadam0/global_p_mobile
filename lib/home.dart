@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import 'all_providers.dart';
 import 'data/data.dart';
-import 'main.dart';
+import 'mainLogin.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -107,12 +107,17 @@ class _homeState extends ConsumerState<home> {
 
           Expanded(
             child: GridView.count(
+              mainAxisSpacing: 10,
               padding: const EdgeInsets.symmetric(horizontal: 5,vertical:40),
               primary: false,
-              crossAxisCount: 3,
-                childAspectRatio: 0.9,
-                children: [ for (var category in Categorys)
-                  CategoryItem(img: category.img, name: category.name)
+              crossAxisCount: (s.width > 290) ? 3 : 2,
+              //crossAxisCount: 3,
+              childAspectRatio: s.width / (s.height / 1.5),
+                children: [
+                  for (var category in Categorys)
+                  CategoryItem(img: category.img, name: category.name),
+                  for (var category in Categorys)
+                    CategoryItem(img: category.img, name: category.name)
                 ],
             ),
           ),

@@ -35,10 +35,6 @@ void main() {
 }
 
 class MyApp extends ConsumerWidget {
-  //String language="en";
-
-
-
   @override
   Widget build(BuildContext context,WidgetRef ref) {
 
@@ -159,316 +155,321 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           ]
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            // Hero(
-            //   tag: "logo",
-            //   child: Container(
-            //     //margin:EdgeInsets.fromLTRB(100, 10, 100, 100)
-            //       margin: EdgeInsets.only(top: 10),
-            //       width: 250,
-            //       child: Image.asset("images/gp.png")),
-            // ),
-            SizedBox(
-              height: 100,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Container(
-                width: s.width*0.75,
-                child: Align(alignment: Alignment.centerLeft,
-                    child: Text(
-                      AppLocalizations.of(context)!.signin.toString(),
-                      style:TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff798DB1)) ,
-                    )
+        child: SingleChildScrollView(
+          child: Container(
+            height: s.height*0.8,
+            child: Column(
+              children: <Widget>[
+                // Hero(
+                //   tag: "logo",
+                //   child: Container(
+                //     //margin:EdgeInsets.fromLTRB(100, 10, 100, 100)
+                //       margin: EdgeInsets.only(top: 10),
+                //       width: 250,
+                //       child: Image.asset("images/gp.png")),
+                // ),
+                SizedBox(
+                  height: 100,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            //
-            //
-            //Login form
-            //
-            //
-            Form(
-              key: myform,
-              child: Column(children: [
-
-                    Txtfield(
-
-                        child: TextFormField(
-                          controller: t1,
-                          //autovalidateMode:AutovalidateMode.onUserInteraction,
-                          // validator: (val){
-                          //   if(!(val=="admin")){
-                          //     return "wrong username";
-                          //   }
-                          // },
-                          decoration: InputDecoration(
-                            //contentPadding: EdgeInsets.only(left: 35, right: 5, top: 5, bottom: 5),
-                            //errorStyle: TextStyle(fontSize: 12, height: 0),
-                            //errorMaxLines: 1,
-                            //errorStyle: TextStyle(color: Colors.black),
-                            border: InputBorder.none,
-                            icon: Icon(
-                              Icons.person,
-                              color: Color(0xff798DB1),
-                            ),
-                            //hintText: "Username",
-                            hintText: AppLocalizations.of(context)!.username.toString(),
-                          ),
-                          cursorColor: Color(0xff798DB1),
+                Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Container(
+                    width: s.width*0.75,
+                    child: Align(alignment: Alignment.centerLeft,
+                        child: Text(
+                          AppLocalizations.of(context)!.signin.toString(),
+                          style:TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff798DB1)) ,
                         )
                     ),
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
-                Txtfield(
-                    child: TextFormField(
-                      controller: t2,
-                      obscureText: visible,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          icon: Icon(
-                            Icons.lock,
-                            color: Color(0xff798DB1),
+                //
+                //
+                //Login form
+                //
+                //
+                Form(
+                  key: myform,
+                  child: Column(children: [
+
+                        Txtfield(
+
+                            child: TextFormField(
+                              controller: t1,
+                              //autovalidateMode:AutovalidateMode.onUserInteraction,
+                              // validator: (val){
+                              //   if(!(val=="admin")){
+                              //     return "wrong username";
+                              //   }
+                              // },
+                              decoration: InputDecoration(
+                                //contentPadding: EdgeInsets.only(left: 35, right: 5, top: 5, bottom: 5),
+                                //errorStyle: TextStyle(fontSize: 12, height: 0),
+                                //errorMaxLines: 1,
+                                //errorStyle: TextStyle(color: Colors.black),
+                                border: InputBorder.none,
+                                icon: Icon(
+                                  Icons.person,
+                                  color: Color(0xff798DB1),
+                                ),
+                                //hintText: "Username",
+                                hintText: AppLocalizations.of(context)!.username.toString(),
+                              ),
+                              cursorColor: Color(0xff798DB1),
+                            )
+                        ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Txtfield(
+                        child: TextFormField(
+                          controller: t2,
+                          obscureText: visible,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              icon: Icon(
+                                Icons.lock,
+                                color: Color(0xff798DB1),
+                              ),
+                              suffixIcon: GestureDetector(
+                                child: Icon(Icons.remove_red_eye, color: Color(0xff798DB1)),
+                                onTap: () {
+                                  setState(() {
+                                    visible = !visible;
+                                  });
+                                },
+                              ),
+                              hintText: AppLocalizations.of(context)!.password.toString()
                           ),
-                          suffixIcon: GestureDetector(
-                            child: Icon(Icons.remove_red_eye, color: Color(0xff798DB1)),
-                            onTap: () {
-                              setState(() {
-                                visible = !visible;
-                              });
+                          cursorColor: Color(0xff798DB1),
+                        )),
+                  ],),
+                ),
+
+                auth?
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  //decoration: BoxDecoration(color: Color(0x55000000)),
+                  width: s.width*0.72,
+                  child: Text("wrong credentiels",style: TextStyle(color: Colors.red),),
+                ):
+                Container(
+                  height: 0,
+                  padding: EdgeInsets.fromLTRB(0, 0, 0,0 ),
+                  //decoration: BoxDecoration(color: Color(0x55000000)),
+                  width: s.width*0.72,
+                  child: Text("",style: TextStyle(color: Colors.red),),
+                ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  //decoration: BoxDecoration(color: Color(0x55000000)),
+                  width: s.width*0.8,
+                  child: Row(
+
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //
+                      //Checkbox
+                      //
+                      Row(children: [
+                        /*Transform.scale(
+                          scale: 0.9,
+                          child: Checkbox(
+                            checkColor: Color(0xff000000),
+                            activeColor:Color(0xff798DB1) ,
+                            shape: RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(4))),
+                            value: auth2,
+                            onChanged: (n){
+
+                              ref.read(remember_me.notifier).state=!ref.watch(remember_me);
                             },
                           ),
-                          hintText: AppLocalizations.of(context)!.password.toString()
-                      ),
-                      cursorColor: Color(0xff798DB1),
-                    )),
-              ],),
-            ),
+                        ),*/
+                        Transform.scale(
+                          scale: 1,
+                          child: Switch(
+                            activeColor: Color(0xff798DB1),
+                            value: auth2,
+                            onChanged: (newValue) {
+                              ref.read(remember_me.notifier).state = !ref.watch(remember_me);
+                            },
+                          ),
+                        ),
 
-            auth?
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-              //decoration: BoxDecoration(color: Color(0x55000000)),
-              width: s.width*0.72,
-              child: Text("wrong credentiels",style: TextStyle(color: Colors.red),),
-            ):
-            Container(
-              height: 0,
-              padding: EdgeInsets.fromLTRB(0, 0, 0,0 ),
-              //decoration: BoxDecoration(color: Color(0x55000000)),
-              width: s.width*0.72,
-              child: Text("",style: TextStyle(color: Colors.red),),
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              //decoration: BoxDecoration(color: Color(0x55000000)),
-              width: s.width*0.8,
-              child: Row(
-
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  //
-                  //Checkbox
-                  //
-                  Row(children: [
-                    /*Transform.scale(
-                      scale: 0.9,
-                      child: Checkbox(
-                        checkColor: Color(0xff000000),
-                        activeColor:Color(0xff798DB1) ,
-                        shape: RoundedRectangleBorder( borderRadius: BorderRadius.all(Radius.circular(4))),
-                        value: auth2,
-                        onChanged: (n){
-
-                          ref.read(remember_me.notifier).state=!ref.watch(remember_me);
-                        },
-                      ),
-                    ),*/
-                    Transform.scale(
-                      scale: 1,
-                      child: Switch(
-                        activeColor: Color(0xff798DB1),
-                        value: auth2,
-                        onChanged: (newValue) {
-                          ref.read(remember_me.notifier).state = !ref.watch(remember_me);
-                        },
-                      ),
-                    ),
-
-                    Text(AppLocalizations.of(context)!.rememberme.toString()),
+                        Text(AppLocalizations.of(context)!.rememberme.toString()),
 
 
-                  ],),
-                ],
-              ),
-            ),
-            //
-            //
-            // // // Login Button
-            //
-            //
-            SizedBox(
-              height: 50,
-              width: s.width * 0.8,
-              //width: 150,
-              child: ElevatedButton(
-                onPressed: () {
-                   // if(myform.currentState!.validate()){
-                   // }
-                  if(t1.text=="" && t2.text==""){
-                    setState(() {
-                      auth=false;
-                      context.go('/home');
-                    });
-                  }else{
-                    setState(() {
-                      auth=true;
-                    });
-                  }
-                  //context.go('/home');
-                },
-                child: Text(AppLocalizations.of(context)!.login.toString()),
-                style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(), primary: Color(0xff798DB1)),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: GestureDetector(
-                onTap: (){
-                  _showMyDialog();
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.forgot.toString(),
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      decoration: TextDecoration.underline,
-                      decorationColor: Color(0xff143a80),fontSize: 15),
-
-
+                      ],),
+                    ],
+                  ),
                 ),
-              ),
+                //
+                //
+                // // // Login Button
+                //
+                //
+                SizedBox(
+                  height: 50,
+                  width: s.width * 0.8,
+                  //width: 150,
+                  child: ElevatedButton(
+                    onPressed: () {
+                       // if(myform.currentState!.validate()){
+                       // }
+                      if(t1.text=="" && t2.text==""){
+                        setState(() {
+                          auth=false;
+                          context.go('/home');
+                        });
+                      }else{
+                        setState(() {
+                          auth=true;
+                        });
+                      }
+                      //context.go('/home');
+                    },
+                    child: Text(AppLocalizations.of(context)!.login.toString()),
+                    style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(), primary: Color(0xff798DB1)),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      _showMyDialog();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.forgot.toString(),
+                      style: TextStyle(
+                          color: Color(0xff000000),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xff143a80),fontSize: 15),
+
+
+                    ),
+                  ),
+                ),
+
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       "forgot password?",
+                //       style: TextStyle(
+                //           color: Color(0xff000000),
+                //           decoration: TextDecoration.underline,
+                //           decorationColor: Color(0xff143a80)),
+                //     ),
+                //   ],
+                // ),
+                Expanded(
+                    child: SizedBox(
+                  height: 10,
+                )),
+                //
+                //
+                //OLD BOTTOM NAVIGATION
+                //
+                //
+                /*Container(
+                  margin: EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: s.width * 0.25,
+
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Navigator.pushNamed(context, "/about");
+                              //  Navigator.push(
+                              //      context,
+                              //      PageRouteBuilder(
+                              //          transitionDuration: Duration(seconds: 2),
+                              //          pageBuilder: (_, __, ___) => about()));
+                              //  Navigator.push(
+                              //    context,
+                              //    _createRoute1(),
+                              //  );
+                              _showBottomSheet(context,s.height*0.7);
+                            },
+                            child: Text('About Us'),
+                            style: ElevatedButton.styleFrom(
+                                shape: StadiumBorder(), primary: Color(0xff798DB1)),
+
+                          ),
+                        ),
+                      SizedBox(width: 10,),
+
+                      Hero(
+                        tag:"btn1",
+                        child: Container(
+                          width: s.width * 0.25,
+
+                          child: ElevatedButton(
+                            onPressed: () {
+                             // Navigator.pushNamed(context, "/about");
+                             //  Navigator.push(
+                             //      context,
+                             //      PageRouteBuilder(
+                             //          transitionDuration: Duration(seconds: 2),
+                             //          pageBuilder: (_, __, ___) => about()));
+                             //  Navigator.push(
+                             //    context,
+                             //    _createRoute1(),
+                             //  );
+                             // _showBottomSheet(context,s.height*0.7);
+                              //context.go('/onboarding');
+                              //GoRouter.of(context).go("/onboarding");
+                              context.push("/onboarding");
+                              //GoRouter.of(context).push("/onboarding");
+                            },
+                            child: Text('Demo',style: TextStyle(color: Colors.black),),
+                            style: ElevatedButton.styleFrom(
+                                shape: StadiumBorder(), primary: Color(0xffd7d7d7)),
+
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Container(
+                        width: s.width * 0.25,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _showBottomSheet_contact(context,s.height);
+                          },
+                          child: Text('Contact'),
+                          style: ElevatedButton.styleFrom(
+                              shape: StadiumBorder(), primary: Color(0xff798DB1)),
+
+                        ),
+                      ),
+
+
+
+                    ],
+                  ),
+                ),*/
+
+                // Positioned(
+                //   child: Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: Text("ddd"),
+                //   ),
+                // )
+              ],
             ),
-
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text(
-            //       "forgot password?",
-            //       style: TextStyle(
-            //           color: Color(0xff000000),
-            //           decoration: TextDecoration.underline,
-            //           decorationColor: Color(0xff143a80)),
-            //     ),
-            //   ],
-            // ),
-            Expanded(
-                child: SizedBox(
-              height: 10,
-            )),
-            //
-            //
-            //OLD BOTTOM NAVIGATION
-            //
-            //
-            /*Container(
-              margin: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: s.width * 0.25,
-
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.pushNamed(context, "/about");
-                          //  Navigator.push(
-                          //      context,
-                          //      PageRouteBuilder(
-                          //          transitionDuration: Duration(seconds: 2),
-                          //          pageBuilder: (_, __, ___) => about()));
-                          //  Navigator.push(
-                          //    context,
-                          //    _createRoute1(),
-                          //  );
-                          _showBottomSheet(context,s.height*0.7);
-                        },
-                        child: Text('About Us'),
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(), primary: Color(0xff798DB1)),
-
-                      ),
-                    ),
-                  SizedBox(width: 10,),
-
-                  Hero(
-                    tag:"btn1",
-                    child: Container(
-                      width: s.width * 0.25,
-
-                      child: ElevatedButton(
-                        onPressed: () {
-                         // Navigator.pushNamed(context, "/about");
-                         //  Navigator.push(
-                         //      context,
-                         //      PageRouteBuilder(
-                         //          transitionDuration: Duration(seconds: 2),
-                         //          pageBuilder: (_, __, ___) => about()));
-                         //  Navigator.push(
-                         //    context,
-                         //    _createRoute1(),
-                         //  );
-                         // _showBottomSheet(context,s.height*0.7);
-                          //context.go('/onboarding');
-                          //GoRouter.of(context).go("/onboarding");
-                          context.push("/onboarding");
-                          //GoRouter.of(context).push("/onboarding");
-                        },
-                        child: Text('Demo',style: TextStyle(color: Colors.black),),
-                        style: ElevatedButton.styleFrom(
-                            shape: StadiumBorder(), primary: Color(0xffd7d7d7)),
-
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10,),
-                  Container(
-                    width: s.width * 0.25,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _showBottomSheet_contact(context,s.height);
-                      },
-                      child: Text('Contact'),
-                      style: ElevatedButton.styleFrom(
-                          shape: StadiumBorder(), primary: Color(0xff798DB1)),
-
-                    ),
-                  ),
-
-
-
-                ],
-              ),
-            ),*/
-
-            // Positioned(
-            //   child: Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: Text("ddd"),
-            //   ),
-            // )
-          ],
+          ),
         ),
       ),
     );

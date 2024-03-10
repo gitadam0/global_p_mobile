@@ -1,20 +1,27 @@
 
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:global_p/widgets/ContactBottomSheet.dart';
 import 'package:global_p/widgets/CustomBottomNavigationBar.dart';
 import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
+import 'package:swipe_widget/swipe_widget.dart';
 
 import '../../data/data.dart';
-import '../../main.dart';
+import '../../mainLogin.dart';
 import 'dart:developer';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/Ticket.dart';
+import '../my_colors.dart';
 import 'PartnerListPage.dart';
 
 
@@ -29,134 +36,12 @@ class CategoryDetailsCRC extends ConsumerStatefulWidget {
 }
 
 class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
-
+  bool listtype=true;
   @override
   Widget build(BuildContext context) {
     var selected_index=ref.watch(selectedIndex_bottomnav);
     Size s = MediaQuery.of(context).size;
     AppLocalizations? localizations = AppLocalizations.of(context);
-    //var auth2 = ref.watch(remember_me);
-    //var size = MediaQuery.of(context).size;
-    //final String lang = ref.watch(languageProvider);
-    List<Ticket> testTicketList = [
-      Ticket(
-        name: "Ticket1",
-        personName: "Problem d'exeuction",
-        companyId: "Global Performance Business",
-        doneStageBoolean: true,
-        reopenStageBoolean: false,
-        cancelStageBoolean: false,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "a.karjout@globalperformance.ma",
-        isFastTrack: false,
-        progress: 1,
-      ), Ticket(
-        name: "Ticket2",
-        personName: "Anomalie de virement instantane journal",
-        companyId: "Global Performance Business",
-        doneStageBoolean: false,
-        reopenStageBoolean: false,
-        cancelStageBoolean: true,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "a.karjout@gmail.ma",
-        isFastTrack: false,
-        progress: 0.45,
-      ),
-      Ticket(
-        name: "Ticket3",
-        personName: "John Doe",
-        companyId: "123",
-        doneStageBoolean: false,
-        reopenStageBoolean: false,
-        cancelStageBoolean: false,
-        closedStageBoolean: false,
-        active: true,
-        emailSubject: "adm.mdd@gmail.com",
-        isFastTrack: false,
-        progress: 0.15,
-      ),
-    ]
-    ;
-
-
-    Future<dynamic> fetchCentreDeRelationClient() async {
-      //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
-      await orpc.authenticate('odoo_crc', 'adm.mdd@gmail.com', '12345678');
-      return orpc.callKw({
-        'model': 'helpdesk.ticket',
-        'method': 'search_read',
-        'args': [],
-        //name
-        //person_name
-        //company_id
-        //done_stage_boolean
-        //cancel_stage_boolean
-        //reopen_stage_boolean
-        //closed_stage_boolean
-        //active
-        //email_subject
-        //create_date
-        //is_fast_track
-        //progress: 100.0
-        'kwargs': {
-          'context': {'bin_size': true},
-          'domain': [],
-          'fields': [
-            "name",
-            "person_name",
-            "company_id",
-            "done_stage_boolean",
-            "reopen_stage_boolean",
-            "cancel_stage_boolean",
-            "closed_stage_boolean",
-            "active",
-            "email_subject",
-            "is_fast_track",
-            "progress",
-          ],
-          'limit': 80,
-        },
-      });
-    }
-
-
-
-
-
-
-    Widget buildTickets() {
-
-
-        /*//from database
-        //from database
-        //from database
-        *//*return FutureBuilder(
-            future: fetchCentreDeRelationClient(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      final record =
-                      snapshot.data[index] as Map<String, dynamic>;
-                      return RelationClientTicketListItem(record,context);
-                    });
-              } else {
-                if (snapshot.hasError) return Text('Unable to fetch data'+snapshot.error.toString());
-                return CircularProgressIndicator();
-              }
-            });*//*
-        //from offline
-        //from offline
-        //from offline*/
-        return RelationClientTicketListItemtestinglocaldata(testTicketList );
-
-
-
-    }
-
 
 
 
@@ -202,7 +87,273 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
       body:Center(
         child: Column(
           children: [
-            Expanded(child: buildTickets()),
+            Container(
+              padding: EdgeInsets.only(right: 8,top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        listtype = false;
+                      });
+
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+
+                        border: Border.all(
+
+                            color: listtype? Colors.white:Colors.black
+                        ),
+
+                      ),
+                      child: Icon(Icons.grid_view_rounded),
+                    ),
+                  ),
+
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        listtype = true;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+
+                        border: Border.all(
+                            color: listtype? Colors.black:Colors.white
+                        ),
+
+                      ),
+                      child: Icon(Icons.list),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            //Expanded(child: Ticketstage(testTicketList) ),
+            //new
+            GestureDetector(
+              onPanUpdate: (details) {
+                // Swiping in right direction.
+                if (details.delta.dx > 0) {
+                  print("swipe right");
+                }
+                // Swiping in left direction.
+                if (details.delta.dx < 0) {
+                  print("swipe left");
+                }
+              },
+              onTap: (){
+                context.push("/CategoryDetailsCRCNew");
+              },
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('New'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('new tickets000'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            //done
+            GestureDetector(
+              onTap: (){
+                context.push("/CategoryDetailsCRCDone");
+              },
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Done'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Done tickets'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            //canceld
+            GestureDetector(
+              onTap: (){
+                context.push("/CategoryDetailsCRCanceled");
+              },
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Canceled'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Canceled tickets'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            //repon
+            GestureDetector(
+              onTap: (){
+                context.push("/CategoryDetailsCRCReopend");
+              },
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Reopend'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Reopend tickets'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            //closed
+            GestureDetector(
+              onTap: (){
+                context.push("/CategoryDetailsCRCClosed");
+              },
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Closed'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Closed tickets'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Slidable(
+              // Specify a key if the Slidable is dismissible.
+              key: const ValueKey(0),
+
+              // The start action pane is the one at the left or the top side.
+              startActionPane: ActionPane(
+                // A motion is a widget used to control how the pane animates.
+                motion: const ScrollMotion(),
+
+                // A pane can dismiss the Slidable.
+                dismissible: Dismissible(
+                  confirmDismiss: (direction) async {
+                    if (direction == DismissDirection.startToEnd) {
+                      print("edit");
+                      return false;
+                    } else if (direction == DismissDirection.endToStart) {
+                      print("delete");
+                      return true;
+                    }
+                  },
+                  key: Key("item.key"),
+                  child: Container(
+                    color: Colors.red,
+                    height: 20,
+                  ),
+                ),
+
+
+                // All actions are defined in the children parameter.
+                children: [
+                  // A SlidableAction can have an icon and/or a label.
+                  SlidableAction(
+                    onPressed: (context){
+
+                    },
+                    backgroundColor: Color(0xFFFE4A49),
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    label: 'Delete',
+                  ),
+                  SlidableAction(
+                    backgroundColor: Color(0xFF21B7CA),
+                    foregroundColor: Colors.white,
+                    icon: Icons.share,
+                    label: 'Share',
+                    onPressed: (context){
+
+                    },
+                  ),
+                ],
+              ),
+
+              // The end action pane is the one at the right or the bottom side.
+              endActionPane:  ActionPane(
+                motion: StretchMotion(),
+                children: [
+                  SlidableAction(
+                    // An action can be bigger than the others.
+                    flex: 2,
+                    onPressed: (context){
+                      print("open");
+                    },
+                    backgroundColor: Color(0xFF7BC043),
+                    foregroundColor: Colors.white,
+                    icon: Icons.archive,
+                    label: 'Archive',
+                  ),
+                ],
+              ),
+
+
+              // The child of the Slidable is what the user sees when the
+              // component is not dragged.
+              child: Card(
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Closed'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Closed tickets'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 100,
+              color: Colors.red,
+              child: SwipeWidget(
+                  onSwipe: () => print('Swiped!'),
+                  onSwipeLeft: () => print('Swiped left! I feel rejected...'),
+                  onSwipeRight: () => print('Swiped right!'),
+                  onUpdate: (distance) => print('The distance of the swipe is $distance (from 0 to 1)'),
+                distance: 0.5,
+                angle: 0,
+                rotation: 100,
+                //scale: 2,
+                dragStrenght: 1,
+                child: Card(
+                    elevation: 5,
+                    child: ListTile(
+                      title: Text('Closed'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Closed tickets'),
+                        ],
+                      ),
+                    ),
+                  ),
+              ),
+            ),
           ],
         )
       ),
@@ -212,139 +363,41 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
           createPartner();
           setState(() {
             fetchContacts();
-          });
-
-        */},
+          });*/
+          //_showMyDialog();
+        },
         mini: true,
         child: const Icon(Icons.add, color: Colors.white, size: 25),
       ),
     );
 
   }
+
+
+
 }
 
 
 
-
-Widget RelationClientTicketListItem(Map<String, dynamic> record,BuildContext context) {
-
-  return Card(
-    elevation: 3,
-    margin: EdgeInsets.all(10),
-    child: ListTile(
-
-      title: Text('${record['name']}'),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${record['email_subject']}'),
-          Text('${record["company_id"][1]} ' ),
-          if (record['person_name']!="") Text('${record['person_name']}'),
-          Text('active: ${record['active']}'),
-          if (record['done_stage_boolean']) RoundedStatusWidget("done stage",Colors.green),
-          if (record['reopen_stage_boolean']) RoundedStatusWidget("reopen stage",Color.fromRGBO(
-              255, 228, 0, 1.0)),
-          if (record['closed_stage_boolean']) RoundedStatusWidget("closed stage",Colors.redAccent),
-          if (record['cancel_stage_boolean']) RoundedStatusWidget("cancel stage",Colors.red),
-          if (!record['done_stage_boolean'] && !record['reopen_stage_boolean'] && !record['closed_stage_boolean'] && !record['cancel_stage_boolean'])
-            RoundedStatusWidget("new stage",Color.fromRGBO(
-                19, 103, 20, 1.0)),
-          Text('is_fast_track: ${record['is_fast_track']}'),
-          //Text('progress: ${record['progress']}'),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 8, // Set the height as per your design
-                width: MediaQuery.of(context).size.width* 0.7, // Adjust the width as needed
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4), // Adjust the radius as needed
-                  border: Border.all(color: Colors.grey), // Adjust the border color as needed
-                ),
-                child: LinearProgressIndicator(
-                  value: record['progress'], // Assuming progress is a double between 0 and 1
-                  minHeight: 8,
-                  backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                ),
-              ),
-
-              Text('${record['progress']}%'),
-            ],
-          ),
-
-          //Text('Base URL: ${orpc.baseURL}'),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
+Widget Ticketstage(List<Ticket> ticketList) {
   return ListView.builder(
     itemCount: ticketList.length,
     itemBuilder: (context, index) {
       Ticket record = ticketList[index];
 
       return Card(
-        elevation: 3,
+        elevation: 5,
         margin: EdgeInsets.all(10),
         child: ListTile(
-          title: Text('${record.name}'),
+          title: Text('New'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${record.companyId} '),
-              Text('${record.personName}'),
-              Text('active: ${record.active}'),
-              Text('${record.emailSubject}'),
-              if (record.doneStageBoolean) RoundedStatusWidget("done stage",Colors.grey),
-              if (record.reopenStageBoolean) RoundedStatusWidget("reopen stage",Colors.yellow),
-              if (record.closedStageBoolean) RoundedStatusWidget("closed stage",Colors.redAccent),
-              if (record.cancelStageBoolean) RoundedStatusWidget("cancel stage",Colors.red),
-              if (!record.doneStageBoolean && !record.reopenStageBoolean && !record.closedStageBoolean && !record.cancelStageBoolean)
-                RoundedStatusWidget("new stage",Color.fromRGBO(
-                    19, 103, 20, 1.0)),
-              Text('is_fast_track: ${record.isFastTrack}'),
-              Text('progress: ${record.progress}'),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 8, // Set the height as per your design
-                    width: MediaQuery.of(context).size.width* 0.7, // Adjust the width as needed
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4), // Adjust the radius as needed
-                      border: Border.all(color: Colors.grey), // Adjust the border color as needed
-                    ),
-                    child: LinearProgressIndicator(
-                      value: record.progress, // Assuming progress is a double between 0 and 1
-                      minHeight: 8,
-                      backgroundColor: Colors.grey,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                    ),
-                  ),
-
-                  Text((record.progress*100).toString()+'%'),
-                ],
-              ),
+              Text('new tickets'),
             ],
           ),
         ),
       );
     },
-  );
-}
-Widget RoundedStatusWidget (String text, Color color) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(color: Colors.white),
-    ),
   );
 }
