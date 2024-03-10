@@ -1,9 +1,9 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCClosed.dart';
-import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCNew.dart';
-import 'package:global_p/categoryDetailsPages/CategoryDetailsCRCReopend.dart';
+import 'package:global_p/categoryDetailsPages/categoryDetailsDiffrentTicketTypes/CategoryDetailsCRCClosed.dart';
+import 'package:global_p/categoryDetailsPages/categoryDetailsDiffrentTicketTypes/CategoryDetailsCRCNew.dart';
+import 'package:global_p/categoryDetailsPages/categoryDetailsDiffrentTicketTypes/CategoryDetailsCRCReopend.dart';
 import 'package:global_p/help.dart';
 import 'package:global_p/home.dart';
 import 'package:global_p/onboarding.dart';
@@ -12,8 +12,8 @@ import 'package:global_p/widgets/CategoryItem.dart';
 import 'package:go_router/go_router.dart';
 
 import '../categoryDetailsPages/CategoryDetailsCRC.dart';
-import '../categoryDetailsPages/CategoryDetailsCRCDone.dart';
-import '../categoryDetailsPages/CategoryDetailsCRCanceled.dart';
+import '../categoryDetailsPages/categoryDetailsDiffrentTicketTypes/CategoryDetailsCRCDone.dart';
+import '../categoryDetailsPages/categoryDetailsDiffrentTicketTypes/CategoryDetailsCRCanceled.dart';
 import '../categoryDetailsPages/CategoryDetailsContacts.dart';
 import '../mainLogin.dart';
 import '../map.dart';

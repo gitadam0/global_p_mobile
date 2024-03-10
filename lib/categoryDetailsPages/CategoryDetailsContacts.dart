@@ -176,7 +176,6 @@ class _CategoryDetailsContactsState extends ConsumerState<CategoryDetailsContact
                           });
                           Navigator.of(context).pop();
                         }
-
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -188,27 +187,6 @@ class _CategoryDetailsContactsState extends ConsumerState<CategoryDetailsContact
               ],
             ),
           ),
-          /*actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: s.width,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Send")
-                ),
-              ),
-            )
-          ],*/
         );
       },
     );

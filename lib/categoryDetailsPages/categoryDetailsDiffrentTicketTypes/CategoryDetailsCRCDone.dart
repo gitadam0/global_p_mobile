@@ -9,39 +9,33 @@ import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
 
-import '../../data/data.dart';
-import '../../mainLogin.dart';
+import '../../../data/data.dart';
+import '../../../mainLogin.dart';
 import 'dart:developer';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../models/Ticket.dart';
-import '../my_colors.dart';
-import 'PartnerListPage.dart';
+import '../../../models/Ticket.dart';
+import '../../my_colors.dart';
 
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
 final orpc = OdooClient('http://83.171.249.157:8069');
-class CategoryDetailsCRCClosed extends ConsumerStatefulWidget {
-  CategoryDetailsCRCClosed({Key? key}) : super(key: key);
+class CategoryDetailsCRCDone extends ConsumerStatefulWidget {
+  CategoryDetailsCRCDone({Key? key}) : super(key: key);
 
 
   @override
-  _CategoryDetailsCRCClosed createState() => _CategoryDetailsCRCClosed();
+  _CategoryDetailsCRCDone createState() => _CategoryDetailsCRCDone();
 }
 
-class _CategoryDetailsCRCClosed extends ConsumerState<CategoryDetailsCRCClosed> {
+class _CategoryDetailsCRCDone extends ConsumerState<CategoryDetailsCRCDone> {
 
   @override
   Widget build(BuildContext context) {
     var selected_index=ref.watch(selectedIndex_bottomnav);
     Size s = MediaQuery.of(context).size;
     AppLocalizations? localizations = AppLocalizations.of(context);
-    //var auth2 = ref.watch(remember_me);
-    //var size = MediaQuery.of(context).size;
-    //final String lang = ref.watch(languageProvider);
-
-
 
     Future<dynamic> fetchCentreDeRelationClient() async {
       //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');
@@ -329,35 +323,6 @@ class _CategoryDetailsCRCClosed extends ConsumerState<CategoryDetailsCRCClosed> 
                             print('Button clicked with empty TextField');
                           }
                         });
-                        // if(nameController.text.trim().isEmpty || int.parse(percentageController.text) <0){
-                        //   print("error check log");
-                        // }else{
-                        //   /*//createPartner(nameController.text);
-                        //   setState(() {
-                        //     //fetchContacts();
-                        //   });*/
-                        //
-                        //   if(double.parse(percentageController.text)>100){
-                        //     percentageController.text="100";
-                        //   }
-                        //   testTicketList.add(
-                        //       Ticket(
-                        //           name: nameController.text, personName: "personName",
-                        //           companyId: "companyId",
-                        //           doneStageBoolean: false,
-                        //           reopenStageBoolean: false,
-                        //           cancelStageBoolean: false,
-                        //           closedStageBoolean: false,
-                        //           active: false, emailSubject: "emailSubject",
-                        //           isFastTrack: false,
-                        //           progress: (double.parse(percentageController.text)/100)
-                        //       )
-                        //   );
-                        //   print(double.parse(percentageController.text)/100);
-                        //   setState(() {
-                        //   });
-                        //   Navigator.of(context).pop();
-                        // }
 
                       },
                       child: Padding(
@@ -442,7 +407,8 @@ Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
 
     itemBuilder: (context, index) {
       Ticket record = ticketList[index];
-      if (!record.closedStageBoolean) {
+      if (!record.doneStageBoolean) {
+        // Skip items that don't meet the condition
         return Container(); // or return null;
       }
       return Card(

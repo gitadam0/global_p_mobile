@@ -21,8 +21,6 @@ import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/Ticket.dart';
-import '../my_colors.dart';
-import 'PartnerListPage.dart';
 
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
@@ -42,8 +40,6 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
     var selected_index=ref.watch(selectedIndex_bottomnav);
     Size s = MediaQuery.of(context).size;
     AppLocalizations? localizations = AppLocalizations.of(context);
-
-
 
     return Scaffold(
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -87,6 +83,7 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
       body:Center(
         child: Column(
           children: [
+            // diffrent list types
             Container(
               padding: EdgeInsets.only(right: 8,top: 5),
               child: Row(
@@ -132,8 +129,6 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
                 ],
               ),
             ),
-
-            //Expanded(child: Ticketstage(testTicketList) ),
             //new
             GestureDetector(
               onPanUpdate: (details) {
@@ -239,121 +234,6 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
                 ),
               ),
             ),
-
-            Slidable(
-              // Specify a key if the Slidable is dismissible.
-              key: const ValueKey(0),
-
-              // The start action pane is the one at the left or the top side.
-              startActionPane: ActionPane(
-                // A motion is a widget used to control how the pane animates.
-                motion: const ScrollMotion(),
-
-                // A pane can dismiss the Slidable.
-                dismissible: Dismissible(
-                  confirmDismiss: (direction) async {
-                    if (direction == DismissDirection.startToEnd) {
-                      print("edit");
-                      return false;
-                    } else if (direction == DismissDirection.endToStart) {
-                      print("delete");
-                      return true;
-                    }
-                  },
-                  key: Key("item.key"),
-                  child: Container(
-                    color: Colors.red,
-                    height: 20,
-                  ),
-                ),
-
-
-                // All actions are defined in the children parameter.
-                children: [
-                  // A SlidableAction can have an icon and/or a label.
-                  SlidableAction(
-                    onPressed: (context){
-
-                    },
-                    backgroundColor: Color(0xFFFE4A49),
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Delete',
-                  ),
-                  SlidableAction(
-                    backgroundColor: Color(0xFF21B7CA),
-                    foregroundColor: Colors.white,
-                    icon: Icons.share,
-                    label: 'Share',
-                    onPressed: (context){
-
-                    },
-                  ),
-                ],
-              ),
-
-              // The end action pane is the one at the right or the bottom side.
-              endActionPane:  ActionPane(
-                motion: StretchMotion(),
-                children: [
-                  SlidableAction(
-                    // An action can be bigger than the others.
-                    flex: 2,
-                    onPressed: (context){
-                      print("open");
-                    },
-                    backgroundColor: Color(0xFF7BC043),
-                    foregroundColor: Colors.white,
-                    icon: Icons.archive,
-                    label: 'Archive',
-                  ),
-                ],
-              ),
-
-
-              // The child of the Slidable is what the user sees when the
-              // component is not dragged.
-              child: Card(
-                elevation: 5,
-                margin: EdgeInsets.all(10),
-                child: ListTile(
-                  title: Text('Closed'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Closed tickets'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 100,
-              color: Colors.red,
-              child: SwipeWidget(
-                  onSwipe: () => print('Swiped!'),
-                  onSwipeLeft: () => print('Swiped left! I feel rejected...'),
-                  onSwipeRight: () => print('Swiped right!'),
-                  onUpdate: (distance) => print('The distance of the swipe is $distance (from 0 to 1)'),
-                distance: 0.5,
-                angle: 0,
-                rotation: 100,
-                //scale: 2,
-                dragStrenght: 1,
-                child: Card(
-                    elevation: 5,
-                    child: ListTile(
-                      title: Text('Closed'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Closed tickets'),
-                        ],
-                      ),
-                    ),
-                  ),
-              ),
-            ),
           ],
         )
       ),
@@ -372,19 +252,12 @@ class _CategoryDetailsCRC extends ConsumerState<CategoryDetailsCRC> {
     );
 
   }
-
-
-
 }
-
-
 
 Widget Ticketstage(List<Ticket> ticketList) {
   return ListView.builder(
     itemCount: ticketList.length,
     itemBuilder: (context, index) {
-      Ticket record = ticketList[index];
-
       return Card(
         elevation: 5,
         margin: EdgeInsets.all(10),

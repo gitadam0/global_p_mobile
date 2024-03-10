@@ -32,7 +32,7 @@ class CategoryItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 24),
+              height: 90,
               child: ClipRRect(
                 child: Image.asset(
                   img,
@@ -40,7 +40,6 @@ class CategoryItem extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
-              height: 90,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),

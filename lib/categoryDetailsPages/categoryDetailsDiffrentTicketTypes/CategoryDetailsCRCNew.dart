@@ -9,15 +9,14 @@ import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
 
-import '../../data/data.dart';
-import '../../mainLogin.dart';
+import '../../../data/data.dart';
+import '../../../mainLogin.dart';
 import 'dart:developer';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../models/Ticket.dart';
-import '../my_colors.dart';
-import 'PartnerListPage.dart';
+import '../../../models/Ticket.dart';
+import '../../my_colors.dart';
 
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
@@ -37,11 +36,6 @@ class _CategoryDetailsCRCNew extends ConsumerState<CategoryDetailsCRCNew> {
     var selected_index=ref.watch(selectedIndex_bottomnav);
     Size s = MediaQuery.of(context).size;
     AppLocalizations? localizations = AppLocalizations.of(context);
-    //var auth2 = ref.watch(remember_me);
-    //var size = MediaQuery.of(context).size;
-    //final String lang = ref.watch(languageProvider);
-
-
 
     Future<dynamic> fetchCentreDeRelationClient() async {
       //await orpc.authenticate('odoo15_2023_adam', 'odoo15_2023_adam', '123');

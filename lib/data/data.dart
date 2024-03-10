@@ -12,6 +12,10 @@ const Categorys= [
    //Category( id: '',name:"Configuration",img: "images/menu_imgs/Application.png"),
    Category( id: '',name:"Contacts",),
    Category( id: '',name:"CRM",img: "images/menu_imgs/img2.png"),
+   Category( id: '',name:"CRM",img: "images/menu_imgs/img2.png"),
+   Category( id: '',name:"CRM",img: "images/menu_imgs/img2.png"),
+   Category( id: '',name:"CRM",img: "images/menu_imgs/img2.png"),
+   Category( id: '',name:"CRM",img: "images/menu_imgs/img2.png"),
   // Category( id: '',name:"CRM",img: "images/menu_imgs/contacts.png"),
 
 

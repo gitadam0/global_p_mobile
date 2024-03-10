@@ -9,28 +9,27 @@ import 'package:global_p/widgets/language_dropdown.dart';
 import 'package:go_router/go_router.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
 
-import '../../data/data.dart';
-import '../../mainLogin.dart';
+import '../../../data/data.dart';
+import '../../../mainLogin.dart';
 import 'dart:developer';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../models/Ticket.dart';
-import '../my_colors.dart';
-import 'PartnerListPage.dart';
+import '../../../models/Ticket.dart';
+import '../../my_colors.dart';
 
 
 //final orpc = OdooClient('http://192.168.1.44:8069');
 final orpc = OdooClient('http://83.171.249.157:8069');
-class CategoryDetailsCRCanceled extends ConsumerStatefulWidget {
-  CategoryDetailsCRCanceled({Key? key}) : super(key: key);
+class CategoryDetailsCRCClosed extends ConsumerStatefulWidget {
+  CategoryDetailsCRCClosed({Key? key}) : super(key: key);
 
 
   @override
-  _CategoryDetailsCRCanceled createState() => _CategoryDetailsCRCanceled();
+  _CategoryDetailsCRCClosed createState() => _CategoryDetailsCRCClosed();
 }
 
-class _CategoryDetailsCRCanceled extends ConsumerState<CategoryDetailsCRCanceled> {
+class _CategoryDetailsCRCClosed extends ConsumerState<CategoryDetailsCRCClosed> {
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +49,6 @@ class _CategoryDetailsCRCanceled extends ConsumerState<CategoryDetailsCRCanceled
         'model': 'helpdesk.ticket',
         'method': 'search_read',
         'args': [],
-        //name
-        //person_name
-        //company_id
-        //done_stage_boolean
-        //cancel_stage_boolean
-        //reopen_stage_boolean
-        //closed_stage_boolean
-        //active
-        //email_subject
-        //create_date
-        //is_fast_track
-        //progress: 100.0
         'kwargs': {
           'context': {'bin_size': true},
           'domain': [],
@@ -82,10 +69,6 @@ class _CategoryDetailsCRCanceled extends ConsumerState<CategoryDetailsCRCanceled
         },
       });
     }
-
-
-
-
 
 
     Widget buildTickets() {
@@ -329,36 +312,6 @@ class _CategoryDetailsCRCanceled extends ConsumerState<CategoryDetailsCRCanceled
                             print('Button clicked with empty TextField');
                           }
                         });
-                        // if(nameController.text.trim().isEmpty || int.parse(percentageController.text) <0){
-                        //   print("error check log");
-                        // }else{
-                        //   /*//createPartner(nameController.text);
-                        //   setState(() {
-                        //     //fetchContacts();
-                        //   });*/
-                        //
-                        //   if(double.parse(percentageController.text)>100){
-                        //     percentageController.text="100";
-                        //   }
-                        //   testTicketList.add(
-                        //       Ticket(
-                        //           name: nameController.text, personName: "personName",
-                        //           companyId: "companyId",
-                        //           doneStageBoolean: false,
-                        //           reopenStageBoolean: false,
-                        //           cancelStageBoolean: false,
-                        //           closedStageBoolean: false,
-                        //           active: false, emailSubject: "emailSubject",
-                        //           isFastTrack: false,
-                        //           progress: (double.parse(percentageController.text)/100)
-                        //       )
-                        //   );
-                        //   print(double.parse(percentageController.text)/100);
-                        //   setState(() {
-                        //   });
-                        //   Navigator.of(context).pop();
-                        // }
-
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -442,7 +395,7 @@ Widget RelationClientTicketListItemtestinglocaldata(List<Ticket> ticketList) {
 
     itemBuilder: (context, index) {
       Ticket record = ticketList[index];
-      if (!record.cancelStageBoolean) {
+      if (!record.closedStageBoolean) {
         return Container(); // or return null;
       }
       return Card(

@@ -107,17 +107,19 @@ class _homeState extends ConsumerState<home> {
 
           Expanded(
             child: GridView.count(
-              mainAxisSpacing: 10,
-              padding: const EdgeInsets.symmetric(horizontal: 5,vertical:40),
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 5,vertical:10),
               primary: false,
               crossAxisCount: (s.width > 290) ? 3 : 2,
               //crossAxisCount: 3,
-              childAspectRatio: s.width / (s.height / 1.5),
+              shrinkWrap: true,
+              //if you the aspect ratio to change
+              //childAspectRatio: s.width / (s.height / 1.7),
+              childAspectRatio: 0.8,
                 children: [
                   for (var category in Categorys)
                   CategoryItem(img: category.img, name: category.name),
-                  for (var category in Categorys)
-                    CategoryItem(img: category.img, name: category.name)
                 ],
             ),
           ),
